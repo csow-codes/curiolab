@@ -1,0 +1,13 @@
+[theme]
+primaryColor="#a78bfa"              # lavender accent
+backgroundColor="#fffdfc"           # off-white background
+secondaryBackgroundColor="#f8f4ff"  # pale lilac panels
+textColor="#1f2937"                 # soft gray text
+font="sans serif"
+
+[theme]
+primaryColor="#a78bfa"
+backgroundColor="#fffdfc"
+secondaryBackgroundColor="#f8f4ff"
+textColor="#1f2937"
+font="sans serif"
