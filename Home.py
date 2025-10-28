@@ -85,7 +85,7 @@ st.markdown("""
 
 # welcome message
 if prof.get("name"):
-    cute_box(f"💫 Welcome back, **Dr. {prof['name']}!**")
+    cute_box(f"💫 Welcome back, Dr. {prof['name']}!")
 else:
     cute_box("💫 Welcome, scientist! Create your avatar to begin!")
 
