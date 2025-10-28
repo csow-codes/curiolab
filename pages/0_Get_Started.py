@@ -1,7 +1,8 @@
+# pages/0_Get_Started.py
 import streamlit as st, json, os, random, glob
 from PIL import Image, ImageDraw
 
-st.set_page_config(page_title="Get Started — LearnLab", page_icon="👩‍🔬", layout="wide")
+st.set_page_config(page_title="Get Started!", page_icon="👩‍🔬", layout="wide")
 
 def cute_box(text: str, bg="#f8f4ff"):
     st.markdown(
@@ -76,4 +77,3 @@ with left:
 with right:
     st.markdown("### Why we collect observations")
     st.write("Scientists look for **patterns** across days. When you log data consistently, you can make claims and test them. LearnLab helps you do both — with friendly charts and a mini report.")
-
