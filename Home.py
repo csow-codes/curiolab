@@ -27,15 +27,15 @@ with st.sidebar:
     st.markdown("---")
     # quick links (works on Streamlit ≥1.39; falls back to markdown)
     try:
-        st.page_link("pages/0_Get_Started_Profile.py", label="Get Started Profile", icon="🔬")
-        st.page_link("pages/1_Modules.py", label="Modules", icon="🗂️")
-        st.page_link("pages/2_Module_Air_Quality.py", label="Air & Weather", icon="🌤️")
-        st.page_link("pages/3_Module_Seeds_Growth.py", label="Seeds & Growth", icon="🌱")
+        st.page_link("pages/0_Get_Started.py", label="Get Started", icon="🔬")
+        st.page_link("pages/1_Modules_Hub.py", label="Modules", icon="🗂️")
+        st.page_link("pages/2_Air_Quality.py", label="Air & Weather", icon="🌤️")
+        st.page_link("pages/3_Seeds_Growth.py", label="Seeds & Growth", icon="🌱")
     except Exception:
-        st.markdown("[🔬 Get Started Profile](pages/0_Get_Started_Profile.py)")
-        st.markdown("[🗂️ Modules](pages/1_Modules.py)")
-        st.markdown("[🌤️ Air & Weather](pages/2_Module_Air_Quality.py)")
-        st.markdown("[🌱 Seeds & Growth](pages/3_Module_Seeds_Growth.py)")
+        st.markdown("[🔬 Get Started](pages/0_Get_Started_Profile.py)")
+        st.markdown("[🗂️ Modules](pages/1_Modules_Hub.py)")
+        st.markdown("[🌤️ Air & Weather](pages/2_Air_Quality.py)")
+        st.markdown("[🌱 Seeds & Growth](pages/3_Seeds_Growth.py)")
 
 # ---------- cute UI helper ----------
 def cute_box(text: str, bg="#f8f4ff"):
@@ -103,21 +103,21 @@ go_a, go_b, go_c = st.columns([1,1,1])
 with go_a:
     if st.button("✨ Go to Get Started"):
         try:
-            st.switch_page("pages/0_Get_Started_Profile.py")
+            st.switch_page("pages/0_Get_Started.py")
         except Exception:
-            st.markdown("[Open Get Started → Profile](pages/0_Get_Started_Profile.py)")
+            st.markdown("[Open Get Started → Profile](pages/0_Get_Started.py)")
 with go_b:
     if st.button("🗂️ See Modules"):
         try:
-            st.switch_page("pages/1_Modules.py")
+            st.switch_page("pages/1_Modules_Hub.py")
         except Exception:
-            st.markdown("[Open Modules](pages/1_Modules.py)")
+            st.markdown("[Open Modules](pages/1_Modules_Hub.py)")
 with go_c:
     if st.button("🌤️ Try Air & Weather"):
         try:
-            st.switch_page("pages/2_Module_Air_Quality.py")
+            st.switch_page("pages/2_Air_Quality.py")
         except Exception:
-            st.markdown("[Open Air & Weather](pages/2_Module_Air_Quality.py)")
+            st.markdown("[Open Air & Weather](pages/2_Air_Quality.py)")
 
 st.markdown("---")
 
@@ -127,16 +127,16 @@ mc1, mc2, mc3 = st.columns(3)
 with mc1:
     st.markdown("#### 🌤️ Air & Weather")
     st.write("Log temperature, rainfall, and PM2.5. See trends and a friendly Mini Science Report.")
-    st.markdown("[:arrow_right: Open](pages/2_Module_Air_Quality.py)")
+    st.markdown("[:arrow_right: Open](pages/2_Air_Quality.py)")
 with mc2:
     st.markdown("#### 🌱 Seeds & Growth")
     st.write("Track plant height, compare days, and explore how light & water affect growth.")
-    st.markdown("[:arrow_right: Open](pages/3_Module_Seeds_Growth.py)")
+    st.markdown("[:arrow_right: Open](pages/3_Seeds_Growth.py)")
 with mc3:
     st.markdown("#### 🐝 Pollinator Patrol")
     st.write("Count bees & butterflies to study biodiversity in your neighborhood.")
     try:
-        st.markdown("[:arrow_right: Open](pages/4_Module_Pollinator_Patrol.py)")
+        st.markdown("[:arrow_right: Open](pages/4_Pollinator_Patrol.py)")
     except Exception:
         st.write("_Add this page later if you like!_")
 
