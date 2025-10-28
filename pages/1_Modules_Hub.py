@@ -1,6 +1,6 @@
 import streamlit as st, json, os, pandas as pd
 
-st.set_page_config(page_title="Modules b", page_icon="🗂️", layout="wide")
+st.set_page_config(page_title="Modules Hub", page_icon="🗂️", layout="wide")
 
 def cute_box(text: str, bg="#f8f4ff"):
     st.markdown(
@@ -15,7 +15,7 @@ if os.path.exists("profile.json"):
     except Exception:
         prof = {}
 
-st.markdown("## 🗂️ Modules")
+st.markdown("## 🗂️ Modules Hub")
 cute_box("Pick any module below. Earn XP for each observation. Your streak grows when you log on consecutive days ✨")
 
 # quick stats
