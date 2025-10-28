@@ -2,7 +2,7 @@
 import streamlit as st, json, os, random, glob
 from PIL import Image, ImageDraw
 
-st.set_page_config(page_title="Get Started!", page_icon="👩‍🔬", layout="wide")
+st.set_page_config(page_title="Get Started!", page_icon="🔬", layout="wide")
 
 def cute_box(text: str, bg="#f8f4ff"):
     st.markdown(
@@ -47,7 +47,7 @@ if os.path.exists("profile.json"):
     except Exception: prof = {}
 
 st.markdown("## Get Started: Create Your Scientist Profile")
-cute_box("Your profile saves locally. Avatars are **generated** ✨")
+cute_box("Your profile saves locally. Avatars are generated ✨")
 
 left, right = st.columns([1,1.2], gap="large")
 
@@ -90,11 +90,12 @@ with left:
             "last_log_date": prof.get("last_log_date", None)
         }
         json.dump(prof_new, open("profile.json","w"))
-        st.success("Saved! Now open **Missions** to explore.")
+        st.success("Saved! Now open "Missions" to explore.")
         st.balloons()
 
 with right:
     st.markdown("### Why we collect observations")
     st.write("Scientists look for **patterns** across days. When you log data consistently, you can make claims and test them. LearnLab helps you do both — with friendly charts and a mini report.")
+
 
 
