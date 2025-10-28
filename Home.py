@@ -1,8 +1,7 @@
-# Home.py
 import streamlit as st, json, os, random, datetime as dt
 from lang import t
 
-st.set_page_config(page_title="Home", page_icon="🧪", layout="wide")
+st.set_page_config(page_title="LearnLab — Home", page_icon="🧪", layout="wide")
 
 # ---------- load profile ----------
 prof = {}
