@@ -73,3 +73,20 @@ with colB:
             [str(dt.date.today()),"Garden",5,2,"Lots 🌺","Sunny ☀️","noon"]
         ], columns=["date","location","bees","butterflies","flowers","weather","notes"]).to_csv("data/logs_pollinators.csv",index=False)
         st.success("Sample data loaded! Open modules to see charts.")
+
+with st.expander("Quick feedback (1 minute)"):
+    ease = st.slider("How easy was LearnLab to use?", 1, 5, 4)
+    conf = st.slider("Do the charts make sense?", 1, 5, 4)
+    msg  = st.text_input("One thing to improve")
+    if st.button("Submit feedback"):
+        import csv, datetime as dt
+        os.makedirs("data", exist_ok=True)
+        with open("data/feedback.csv","a", newline="") as f:
+            csv.writer(f).writerow([str(dt.date.today()), ease, conf, msg])
+        st.success("Thanks! ✨")
+# show aggregate
+import pandas as pd
+if os.path.exists("data/feedback.csv"):
+    fb = pd.read_csv("data/feedback.csv", header=None, names=["date","ease","conf","msg"])
+    st.caption(f"Feedback so far — ease: {fb['ease'].mean():.1f}/5, understanding: {fb['conf'].mean():.1f}/5 (n={len(fb)})")
+
