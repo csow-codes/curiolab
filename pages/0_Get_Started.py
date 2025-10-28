@@ -52,10 +52,29 @@ cute_box("Your profile saves locally. Avatars are **generated** ✨")
 left, right = st.columns([1,1.2], gap="large")
 
 with left:
-    name = st.text_input("Your name or nickname", value=prof.get("name","Alex"))
-    age = st.selectbox("Age range", ["8–10","11–13","14–16"], index=(["8–10","11–13","14–16"].index(prof.get("age","11–13")) if prof.get("age") else 1))
-    topics = st.multiselect("Favorite topics", ["Environment","Plants","Weather","Health","Physics","Space"], default=prof.get("topics",["Environment"]))
-    language = st.selectbox("Language", ["English","Español","简体中文"], index={"English":0,"Español":1,"简体中文":2}.get(prof.get("language","English"),0))
+    name = st.text_input("Your name or nickname", value=prof.get("name", "Alex"))
+
+    # --- Safe age selectbox ---
+    AGE_CHOICES = ["8–10", "11–13", "14–16"]
+    saved_age = prof.get("age")
+    if saved_age not in AGE_CHOICES:
+        age_index = 1  # default to "11–13"
+    else:
+        age_index = AGE_CHOICES.index(saved_age)
+    age = st.selectbox("Age range", AGE_CHOICES, index=age_index)
+
+    # --- Topics ---
+    topics = st.multiselect(
+        "Favorite topics",
+        ["Environment", "Plants", "Weather", "Health", "Physics", "Space"],
+        default=prof.get("topics", ["Environment"])
+    )
+
+    # --- Safe language selectbox ---
+    LANG_CHOICES = ["English", "Español", "简体中文"]
+    saved_lang = prof.get("language", "English")
+    lang_index = LANG_CHOICES.index(saved_lang) if saved_lang in LANG_CHOICES else 0
+    language = st.selectbox("Language", LANG_CHOICES, index=lang_index)
 
     # simple fallback avatar (works even without assets)
     if st.button("✨ Generate avatar"):
@@ -77,4 +96,5 @@ with left:
 with right:
     st.markdown("### Why we collect observations")
     st.write("Scientists look for **patterns** across days. When you log data consistently, you can make claims and test them. LearnLab helps you do both — with friendly charts and a mini report.")
+
 
