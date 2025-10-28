@@ -46,8 +46,8 @@ if os.path.exists("profile.json"):
     try: prof = json.load(open("profile.json","r"))
     except Exception: prof = {}
 
-st.markdown("## 👩‍🔬 Get Started — Create Your Scientist Profile")
-cute_box("Your profile saves locally. Avatars are **generated**, not photos — privacy-safe ✨")
+st.markdown("## Get Started: Create Your Scientist Profile")
+cute_box("Your profile saves locally. Avatars are **generated** ✨")
 
 left, right = st.columns([1,1.2], gap="large")
 
@@ -77,3 +77,4 @@ with left:
 with right:
     st.markdown("### Why we collect observations")
     st.write("Scientists look for **patterns** across days. When you log data consistently, you can make claims and test them. LearnLab helps you do both — with friendly charts and a mini report.")
+
