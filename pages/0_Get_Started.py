@@ -56,7 +56,7 @@ if os.path.exists("profile.json"):
         prof = {}
 
 st.markdown("## Get Started: Create Your Scientist Profile")
-cute_box("Your profile saves locally (no logins needed). Avatars are **generated**, not photos (privacy-safe) ✨")
+cute_box("Your profile saves locally (no logins needed). Avatars are generated ✨")
 
 left, right = st.columns([1,1.2], gap="large")
 
@@ -118,3 +118,4 @@ with right:
 
     if os.path.exists("profile.json"):
         st.download_button("⬇️ Download saved avatar", data=open(prof.get("avatar"),"rb").read(), file_name=f"{name}_avatar.png")
+
