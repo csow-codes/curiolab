@@ -10,6 +10,17 @@ st.set_page_config(page_title="Seeds & Growth", page_icon="🌱", layout="wide")
 # Super cute styling
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
+html, body, [class^="css"], p, li, span, div { 
+  font-family: 'Poppins', system-ui, sans-serif; 
+  font-weight: 300;
+  color: #a4a4a4;
+}
+h1, h2, h3, h4, .hero h1, .hero h3 { 
+  font-family: 'Nunito', system-ui, sans-serif; 
+  font-weight: 900;
+  color: #7c9aa8;
+}
 .hero {
     background: linear-gradient(135deg, #f8f4ff 0%, #e0f2fe 50%, #ecfccb 100%);
     padding: 40px 50px;
@@ -18,8 +29,8 @@ st.markdown("""
     text-align: center;
     box-shadow: 0 6px 20px rgba(167,139,250,0.25);
 }
-.hero h1 {font-size: 3rem; color: #7c3aed; margin: 0; text-shadow: 2px 2px 4px rgba(124,58,237,0.15);}
-.hero p {color: #6b21a8; font-size: 1.3rem; margin: 8px 0 0 0;}
+.hero h1 {font-size: 3rem; margin: 0; text-shadow: 2px 2px 4px rgba(124,58,237,0.15);}
+.hero p {color: #a4a4a4; font-size: 1.3rem; margin: 8px 0 0 0; font-weight: 300;}
 .section {margin: 32px 0; padding: 24px; background: #fff; border-radius: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);}
 </style>
 """, unsafe_allow_html=True)

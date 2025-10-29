@@ -8,13 +8,24 @@ def cute_box(text: str, bg="#e0f2fe"):
 # CurioLab styling
 st.markdown("""
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
+html, body, [class^="css"], p, li, span, div { 
+  font-family: 'Poppins', system-ui, sans-serif; 
+  font-weight: 300;
+  color: #a4a4a4;
+}
+h1, h2, h3, h4, .hero h1, .hero h3, .card h3 { 
+  font-family: 'Nunito', system-ui, sans-serif; 
+  font-weight: 900;
+  color: #7c9aa8;
+}
 .hero{background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 60%,#ecfccb 100%);border-radius:28px;padding:42px 54px;margin-bottom:28px;text-align:center;box-shadow:0 8px 24px rgba(59,130,246,.18);border:2px solid #bfdbfe}
-.hero h1{font-size:2.4rem;color:#1e40af;margin:0 0 8px;font-weight:800}
-.hero p{color:#475569;margin:6px 0 0 0}
+.hero h1{font-size:2.4rem;margin:0 0 8px}
+.hero p{color:#a4a4a4;margin:6px 0 0 0;font-weight:300}
 .logo-curio{animation:bounce 2s ease-in-out infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .card{background:#fff;border-radius:20px;border:2px solid #e2e8f0;padding:20px;box-shadow:0 4px 12px rgba(2,6,23,.06)}
-.card h3{margin:0 0 8px}
+.card h3{margin:0 0 8px;color:#7c9aa8}
 </style>
 """, unsafe_allow_html=True)
 
