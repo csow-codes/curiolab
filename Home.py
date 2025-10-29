@@ -2,6 +2,99 @@ import streamlit as st, json, os, random, datetime as dt
 from lang import t
 from theme import apply_global_theme, header_with_mascot
 
+import re
+def get_science_buddy_response(question):
+    q_lower = question.lower()
+    
+    # Comprehensive science knowledge base
+    responses = {
+        # Biology
+        "green|chlorophyll|leaf|leaves": "Great question! Plants are green because of chlorophyll, a special pigment in their leaves. Chlorophyll absorbs red and blue light from the sun for photosynthesis, but reflects green light back to our eyes. That's why we see them as green!",
+        
+        "photosynthesis|food|energy": "Excellent question! Photosynthesis is how plants make their own food! They use sunlight, water from the soil, and carbon dioxide from the air to create glucose (sugar) for energy. As a bonus, they release oxygen that we breathe. Isn't that super cool?",
+        
+        "root|roots": "Roots are like a plant's underground support system! They anchor the plant in soil, absorb water and nutrients, and even store food. Some roots can sense gravity and water, helping them grow in the right direction. It's super interesting!!",
+        
+        "flower|pollen|pollination": "Yess, great question!! Flowers are a plant's way of making seeds! They attract pollinators like bees and butterflies with bright colors and sweet nectar. When pollinators visit, they carry pollen from flower to flower, helping plants reproduce.",
+        
+        # Weather and Atmosphere
+        "sky|blue|atmosphere": "Awesome question! The sky is blue because of something called Rayleigh scattering. Sunlight is made of all colors, but blue light has shorter waves that scatter more when hitting air molecules. That scattered blue light reaches our eyes from all directions, making the sky look blue!",
+        
+        "rain|rainfall|precipitation": "Good thinking! Rain forms when water vapor in clouds condenses into droplets. As the droplets get bigger and heavier, gravity pulls them down to Earth. Temperature, air pressure, and humidity all work together to create rain!",
+        
+        "cloud|clouds": "Clouds form when water vapor in the air cools down and condenses into tiny water droplets or ice crystals. These droplets are so light they float in the sky! Different cloud shapes tell us about weather patterns, for example, fluffy cumulus clouds usually mean nice weather, while dark nimbus clouds bring rain!",
+        
+        "thunder|lightning": "Lightning happens when ice particles in clouds bump together, creating static electricity like when you rub a balloon on your hair! When the charge gets strong enough, it jumps as lightning. Thunder is the sound of air rapidly heating and expanding from the lightning's intense heat!",
+        
+        "rainbow": "Rainbows appear when sunlight shines through water droplets in the air. Each droplet acts like a tiny prism, splitting white light into its seven colors: red, orange, yellow, green, blue, indigo, and violet. The colors always appear in the same order because each color bends at a slightly different angle!",
+        
+        "wind": " Wind is simply air in motion! It happens because the Sun heats different parts of Earth unevenly. Warm air rises and cool air rushes in to fill the space, creating wind. The greater the temperature difference, the stronger the wind!",
+        
+        # Astro
+        "star|stars|twinkle": "Stars twinkle because their light passes through Earth's atmosphere, which is constantly moving. The moving air bends and bounces the light around, making stars appear to flicker. In space, astronauts see stars that don't twinkle at all!",
+        
+        "moon|lunar": "The Moon doesn't make its own light - it reflects light from the Sun! We see different moon phases because the Sun lights up different parts of the Moon as it orbits Earth. A full moon happens when the Sun lights up the whole side facing us!",
+        
+        "sun|solar": "The Sun is a giant ball of hot gas - mostly hydrogen and helium. In its core, hydrogen atoms smash together to form helium in a process called nuclear fusion. This releases enormous amounts of energy as heat and light. The Sun is so big that over a million Earths could fit inside it!",
+        
+        "planet|planets": "Our solar system has 8 planets orbiting the Sun. The inner four (Mercury, Venus, Earth, Mars) are rocky planets. The outer four (Jupiter, Saturn, Uranus, Neptune) are gas giants. Each planet has unique features - Saturn has beautiful rings, Jupiter has a giant storm called the Great Red Spot!",
+        
+        "gravity": "Gravity is an invisible force that pulls objects toward each other. The bigger and closer an object is, the stronger its gravitational pull. Earth's gravity keeps us on the ground and the Moon in orbit. Without gravity, we'd float off into space!",
+        
+        # Animals and Insects
+        "bee|bees": "Bees are amazing insects! They can see ultraviolet colors we can't see, recognize human faces, and communicate through special dances. When a bee finds flowers with nectar, it does a 'waggle dance' to tell other bees exactly where to find them. Plus, they're essential pollinators for our food!",
+        
+        "butterfly|butterflies": "Butterflies taste with their feet! They have taste sensors on their legs that help them know if a plant is good for laying eggs. Their wings are covered in thousands of tiny scales that create their beautiful colors. Some butterflies migrate thousands of miles!",
+        
+        "bird|birds|fly|flight": "Birds can fly because they have several special features: lightweight hollow bones, powerful flight muscles, and feathers shaped like airfoils (like airplane wings). When they flap their wings, they create lift that pushes them up. Different wing shapes help birds fly in different ways!",
+        
+        "fish|swim": "Fish breathe underwater using gills! As water flows over their gills, oxygen dissolved in the water passes into their blood, and carbon dioxide passes out. Their streamlined bodies and fins help them move efficiently through water. Some fish can even breathe air or survive in ice-cold waters!",
+        
+        # Physics and Chem
+        "water|h2o": "Water is special! It's made of two hydrogen atoms and one oxygen atom (H₂O). Water is the only substance that naturally exists in all three states on Earth: solid (ice), liquid (water), and gas (steam). It expands when it freezes, which is why ice floats!",
+        
+        "magnet|magnetic": "Magnets work because of invisible magnetic fields created by moving electrons. Every magnet has two poles: north and south. Opposite poles attract each other, while same poles repel. Earth itself is like a giant magnet, which is why compass needles point north!",
+        
+        "color|colors": "Colors are actually different wavelengths of light! When light hits an object, some wavelengths are absorbed and others are reflected. We see the reflected wavelengths as color. A red apple absorbs all colors except red, which bounces back to our eyes!",
+        
+        "sound|hear|noise": "Sound travels in waves through air, water, or solid objects. When something vibrates, it pushes air molecules, creating a wave that travels to your ear. Your eardrum vibrates from these waves, and your brain interprets them as sound. Sound can't travel in space because there's no air!",
+        
+        "temperature|hot|cold|heat": "Temperature measures how fast molecules are moving! When something is hot, its molecules vibrate quickly. When it's cold, they slow down. Heat always flows from hot to cold objects until they reach the same temperature. That's why metal feels colder than wood - it conducts heat away from your hand faster!",
+        
+        # Human Body
+        "blood|heart": "Your heart is an amazing pump that beats about 100,000 times per day! It pumps blood through your body, delivering oxygen and nutrients to every cell. Blood picks up oxygen in your lungs and carries it everywhere. Red blood cells contain iron, which is why blood is red!",
+        
+        "brain": "Your brain is like a supercomputer with about 86 billion neurons! It controls everything you do - thinking, moving, feeling, and even things you don't think about like breathing. Different parts handle different jobs: the cerebrum for thinking, cerebellum for balance, and brain stem for automatic functions!",
+        
+        "breathe|breathing|lung|lungs": "When you breathe in, your lungs fill with air containing oxygen. Tiny air sacs called alveoli transfer oxygen into your blood. Your blood carries oxygen to all your body's cells. When you breathe out, you release carbon dioxide, a waste product cells don't need!",
+        
+        # General Science
+        "experiment|science": "Experiments are how scientists test their ideas! The scientific method involves: 1) Asking a question, 2) Forming a hypothesis (educated guess), 3) Testing it with an experiment, 4) Observing what happens, and 5) Drawing conclusions. Even if your hypothesis is wrong, you still learn something valuable!",
+        
+        "dna|gene|genetics": "DNA is like your body's instruction manual! It's shaped like a twisted ladder (double helix) and contains all the information needed to build and run your body. You inherit half your DNA from each parent, which is why you might look like them. DNA is in almost every cell of your body!",
+    }
+    
+    # Try to match patterns in the question
+    for pattern, response in responses.items():
+        if re.search(pattern, q_lower):
+            return response
+    
+    # Encouraging responses for questions we don't have specific answers for
+    encouragement_responses = [
+        "That's a really cool question! Try searching for it online, asking your teacher or parents, or even doing a simple experiment to find out! Curiosity and discovery is what science is all about.",
+        
+        "What a great question! That's exactly the kind of questions that scientists ask! You might want to investigate this through observation, research, or designing an experiment. What do you personally think might be the answer?",
+        
+        "That's a question worth exploring! You might find answers by reading science books, watching educational videos, or talking with scientists. Sometimes the best way to learn is to investigate yourself!",
+        
+        "Wow, what an fun question! I encourage you to research this topic, because you might discover something amazing. Don't forget to write down what you learn in your science journal!",
+    ]
+    
+    # Use question hash to consistently pick same encouragement for same question
+    import hashlib
+    hash_num = int(hashlib.md5(q_lower.encode()).hexdigest(), 16)
+    return encouragement_responses[hash_num % len(encouragement_responses)]
+
 st.set_page_config(page_title="CurioLab: Home", page_icon="🔬", layout="wide")
 
 # ---------- load profile ----------
@@ -324,15 +417,15 @@ with c3:
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 # ---------- Random Science Fact ----------
-st.markdown("### 💡 Did You Know?")
+st.markdown("### Did You Know?")
 facts = [
-    "🦋 A butterfly's wings are actually transparent! The colors come from light reflecting off tiny scales.",
-    "🌱 Plants can 'hear' water flowing underground and grow their roots toward it!",
-    "⚡ Lightning is 5 times hotter than the surface of the Sun!",
-    "🐝 Bees can recognize human faces and remember them for days!",
-    "🌍 If you could fold a paper 42 times, it would reach the Moon!",
-    "🔬 There are more bacteria in your body than stars in the Milky Way galaxy!",
-    "🌈 You can never see a full rainbow - it's always a circle, but the ground blocks the bottom half!",
+    "A butterfly's wings are actually transparent! The colors come from light reflecting off tiny scales.",
+    "Plants can 'hear' water flowing underground and grow their roots toward it!",
+    "Lightning is 5 times hotter than the surface of the Sun!",
+    "Bees can recognize human faces and remember them for days!",
+    "If you could fold a paper 42 times, it would reach the Moon!",
+    "There are more bacteria in your body than stars in the Milky Way galaxy!",
+    "You can never see a full rainbow - it's always a circle, but the ground blocks the bottom half!",
 ]
 random.seed(dt.date.today().toordinal() + 1)  # Different seed than daily challenge
 st.info(random.choice(facts))
@@ -346,56 +439,12 @@ st.caption("Ask simple questions and get friendly, accurate explanations.")
 
 q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
 if q:
-    # Try to get API key from Streamlit secrets first, then environment variable
-    OPENAI = None
-    try:
-        if "OPENAI_API_KEY" in st.secrets:
-            OPENAI = st.secrets["OPENAI_API_KEY"]
-        elif hasattr(st.secrets, "OPENAI_API_KEY"):
-            OPENAI = st.secrets.OPENAI_API_KEY
-    except Exception:
-        pass
-    
-    if not OPENAI:
-        OPENAI = os.getenv("OPENAI_API_KEY")
-    
-    if OPENAI:
-        try:
-            import openai
-            openai.api_key = OPENAI
-            resp = openai.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role":"system","content":"You are a friendly science buddy for learners age 10–14. Keep it accurate, simple, curious, with emojis."},
-                    {"role":"user","content":q}
-                ],
-                temperature=0.3, max_tokens=300
-            )
-            st.chat_message("assistant").write(resp.choices[0].message.content)
-        except Exception as e:
-            st.chat_message("assistant").write(f"Oops! {e}")
-    else:
-        # Fallback responses when no API key
-        responses = {
-            "green": "Great question! 🌿 Plants are green because of chlorophyll, a special pigment in their leaves. Chlorophyll absorbs red and blue light from the sun for photosynthesis, but reflects green light back to our eyes. That's why we see them as green!",
-            "sky": "Awesome question! 🌤️ The sky is blue because of something called Rayleigh scattering. Sunlight is made of all colors, but blue light has shorter waves that scatter more when hitting air molecules. That scattered blue light reaches our eyes from all directions, making the sky look blue!",
-            "rain": "Good thinking! 🌧️ Rain forms when water vapor in clouds condenses into droplets. As the droplets get bigger and heavier, gravity pulls them down to Earth. Temperature, air pressure, and humidity all work together to create rain!",
-            "stars": "Amazing question! ⭐ Stars twinkle because their light passes through Earth's atmosphere, which is constantly moving. The moving air bends and bounces the light around, making stars appear to flicker. In space, stars don't twinkle at all!",
-            "moon": "Great observation! 🌙 The Moon doesn't make its own light - it reflects light from the Sun! We see different moon phases because the Sun lights up different parts of the Moon as it orbits Earth. A full moon happens when the Sun lights up the whole side facing us!",
-        }
-        
-        # Find best match
-        q_lower = q.lower()
-        response = None
-        for keyword, answer in responses.items():
-            if keyword in q_lower:
-                response = answer
-                break
-        
-        if not response:
-            response = "That's a great science question! 🔬 I'm running in demo mode right now. To get AI-powered answers to all your questions, ask your teacher to add an OpenAI API key to the app settings. In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
-        
-        st.chat_message("assistant").write(response)
+    response = get_science_buddy_response(q)
+    st.chat_message("assistant").write(response)
+
+q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
+if q:
+    # ... all the OpenAI code ...
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
