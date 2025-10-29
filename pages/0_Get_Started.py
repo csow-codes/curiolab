@@ -33,32 +33,6 @@ h1, h2, h3, h4, .hero h1, .hero h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# --- CurioLab Hero with mascot/logo ---
-logo_path = "avatars/curio_logo.png"
-if os.path.exists(logo_path):
-    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
-    st.markdown(f"""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;'>
-        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:76px;height:76px;border-radius:14px;'>
-        <h1>Welcome to CurioLab</h1>
-        <span style='font-size:2.2rem'>🔬</span>
-      </div>
-      <p>Meet <strong>Dr. Curio</strong>, your capybara mascot. Let’s build your scientist profile!</p>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;'>
-        <span class='logo-curio' style='font-size:3rem'>🦫</span>
-        <h1>Welcome to CurioLab</h1>
-        <span style='font-size:2.2rem'>🔬</span>
-      </div>
-      <p>Meet <strong>Dr. Curio</strong>, your capybara mascot. Let’s build your scientist profile!</p>
-    </div>
-    """, unsafe_allow_html=True)
-
 def generate_scientist_emoji(name):
     """Generate a unique emoji for each scientist based on their name"""
     emojis = ["🧪", "🔬", "🌱", "🌤️", "🐝", "🔭", "⚗️", "🌍", "🧬", "🔍"]
