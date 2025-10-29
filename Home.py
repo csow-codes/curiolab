@@ -147,7 +147,7 @@ st.markdown("<br><br>", unsafe_allow_html=True)
 
 # ---------- Recent Discoveries Carousel ----------
 st.markdown("### 🔬 Recent Discoveries")
-st.caption("See what other scientists are discovering!")
+st.caption("See what other scientists are discovering! (Example data for demo)")
 
 discovery_tabs = st.tabs(["🌍 Today", "📅 This Week", "🏆 Top Rated"])
 
@@ -194,7 +194,10 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # ---------- Leaderboard Preview ----------
 st.markdown("### 🏆 Top Scientists This Week")
-leaderboard_data = [
+st.caption("Example leaderboard - compete with scientists around the world!")
+
+# Use columns for cleaner display
+lb_data = [
     ("🥇", "Emma L.", 450, "🔥 12 day streak"),
     ("🥈", "Alex K.", 380, "🌱 Plant Expert"),
     ("🥉", "Jordan T.", 320, "🐝 Bee Whisperer"),
@@ -202,21 +205,52 @@ leaderboard_data = [
     ("5️⃣", "Sarah M.", 280, "🌡️ Weather Pro"),
 ]
 
-leaderboard_html = '<div style="background:white;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(90,138,158,0.08);">'
-for rank, name, xp, badge in leaderboard_data:
-    highlight = 'background:linear-gradient(135deg,#fff9e6 0%,#fffef5 100%);font-weight:600;' if name == "You!" else ''
-    leaderboard_html += f'''
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;margin:8px 0;border-radius:12px;{highlight}">
-        <div style="display:flex;align-items:center;gap:12px;">
-            <span style="font-size:1.5rem;">{rank}</span>
-            <span style="font-weight:500;">{name}</span>
-            <span style="font-size:0.85rem;color:#6b7c8a;">{badge}</span>
+# Create a container with clean styling
+st.markdown("""
+<style>
+.leaderboard-container {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(90,138,158,0.08);
+}
+.lb-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 12px;
+}
+.lb-row.highlight {
+    background: linear-gradient(135deg,#fff9e6 0%,#fffef5 100%);
+    font-weight: 600;
+}
+</style>
+""", unsafe_allow_html=True)
+
+for rank, name, xp, badge in lb_data:
+    if name == "You!":
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg,#fff9e6 0%,#fffef5 100%);border-radius:12px;padding:12px;margin:8px 0;display:flex;justify-content:space-between;align-items:center;font-weight:600;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.5rem;">{rank}</span>
+                <span>{name}</span>
+                <span style="font-size:0.85rem;color:#6b7c8a;">{badge}</span>
+            </div>
+            <span style="color:#7eb8d1;">{xp} XP</span>
         </div>
-        <span style="font-weight:600;color:#7eb8d1;">{xp} XP</span>
-    </div>
-    '''
-leaderboard_html += '</div>'
-st.markdown(leaderboard_html, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+    else:
+        col1, col2, col3, col4 = st.columns([1, 2, 3, 2])
+        with col1:
+            st.markdown(f"**{rank}**")
+        with col2:
+            st.markdown(f"**{name}**")
+        with col3:
+            st.caption(badge)
+        with col4:
+            st.markdown(f"**{xp} XP**")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
