@@ -153,27 +153,27 @@ discovery_tabs = st.tabs(["🌍 Today", "📅 This Week", "🏆 Top Rated"])
 
 with discovery_tabs[0]:
     discoveries_today = [
-        "🌡️ **Sarah M.** discovered temperature drops 5°C at sunset in Phoenix!",
-        "🌱 **Alex K.** observed their bean plant grew 3cm in just 2 days!",
-        "🐝 **Jordan T.** counted 47 bees visiting lavender in 10 minutes!",
+        "**Bob** discovered temperature drops 5°C at sunset in Phoenix!",
+        "**Sarah** observed their bean plant grew 3cm in just 2 days!",
+        "**John** counted 47 bees visiting lavender in 10 minutes!",
     ]
     for disc in discoveries_today:
         st.markdown(f"- {disc}")
 
 with discovery_tabs[1]:
     discoveries_week = [
-        "🌧️ **Emma L.** tracked rainfall patterns and predicted the next storm!",
-        "🦋 **Liam P.** identified 8 different butterfly species in their backyard!",
-        "☁️ **Mia R.** documented all 10 cloud types in a single week!",
+        "**Lisa** tracked rainfall patterns and predicted the next storm!",
+        "**Kai** identified 8 different butterfly species in their backyard!",
+        "**Chloe** documented all 10 cloud types in a single week!",
     ]
     for disc in discoveries_week:
         st.markdown(f"- {disc}")
 
 with discovery_tabs[2]:
     discoveries_top = [
-        "⭐ **Chris B.** created a complete weather station from recycled materials!",
-        "⭐ **Taylor N.** grew plants in 5 different conditions to test photosynthesis!",
-        "⭐ **Morgan S.** built a bee hotel and documented 12 different species!",
+        "**Jane** created a complete weather station from recycled materials!",
+        "**Bill** grew plants in 5 different conditions to test photosynthesis!",
+        "**Amelia** built a bee hotel and documented 12 different species!",
     ]
     for disc in discoveries_top:
         st.markdown(f"- {disc}")
@@ -181,7 +181,7 @@ with discovery_tabs[2]:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ---------- Challenge Friends Feature ----------
-st.markdown("### 🤝 Challenge a Friend")
+st.markdown("###Challenge a Friend")
 col1, col2 = st.columns([2, 1])
 with col1:
     st.text_input("Enter friend's email", placeholder="scientist@curiolab.org", key="friend_email")
@@ -198,11 +198,11 @@ st.caption("Example leaderboard - compete with scientists around the world!")
 
 # Use columns for cleaner display
 lb_data = [
-    ("🥇", "Emma L.", 450, "🔥 12 day streak"),
-    ("🥈", "Alex K.", 380, "🌱 Plant Expert"),
-    ("🥉", "Jordan T.", 320, "🐝 Bee Whisperer"),
+    ("🥇", "Dr.Curio", 450, "🔥 12 day streak"),
+    ("🥈", "Ariel", 380, "🌱 Plant Expert"),
+    ("🥉", "Mary, 320, "🐝 Bee Whisperer"),
     ("4️⃣", "You!", prof["xp"], f"💪 {prof['streak_days']} day streak"),
-    ("5️⃣", "Sarah M.", 280, "🌡️ Weather Pro"),
+    ("5️⃣", "Bill", 280, "🌡️ Weather Pro"),
 ]
 
 # Create a container with clean styling
