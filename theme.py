@@ -4,8 +4,8 @@ import streamlit as st
 
 
 PALETTE = {
-    "header_text": "#5a8a9e",   # stronger pastel blue
-    "body_text": "#6b7c8a",     # softer gray-blue
+    "header_text": "#5a8a9e",
+    "body_text": "#6b7c8a",
     "bg_light": "#f8fbfd",
     "bg_card": "#ffffff",
     "accent": "#7eb8d1",
@@ -14,7 +14,7 @@ PALETTE = {
 
 
 def apply_global_theme() -> None:
-    """Inject global fonts and base colors with clean, modern aesthetic."""
+    """Inject global fonts, colors, and animations for a groundbreaking UI."""
     st.markdown(
         f"""
 <style>
@@ -27,7 +27,7 @@ html, body, .stApp, .stMarkdown, .stText, .stDataFrame, .stTextInput, .stButton,
   color: {PALETTE['body_text']} !important;
 }}
 
-/* Headers - clean Poppins */
+/* Headers */
 h1, h2, h3, h4, h5, h6 {{
   font-family: 'Poppins', sans-serif !important;
   font-weight: 600 !important;
@@ -50,19 +50,26 @@ h1, h2, h3, h4, h5, h6 {{
   background: {PALETTE['bg_light']}; 
 }}
 
-/* Cards with subtle shadow */
+/* Animated cards with breathing effect */
 .card {{ 
   background: {PALETTE['bg_card']}; 
   border: 1px solid {PALETTE['border']}; 
   border-radius: 20px; 
   padding: 24px;
   box-shadow: 0 2px 12px rgba(90, 138, 158, 0.08);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
+  animation: breathe 3s ease-in-out infinite;
+}}
+
+@keyframes breathe {{
+  0%, 100% {{ transform: scale(1); }}
+  50% {{ transform: scale(1.02); }}
 }}
 
 .card:hover {{
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(90, 138, 158, 0.12);
+  transform: translateY(-8px) scale(1.03) !important;
+  box-shadow: 0 8px 30px rgba(90, 138, 158, 0.2);
+  animation: none;
 }}
 
 /* Sidebar styling */
@@ -71,7 +78,19 @@ h1, h2, h3, h4, h5, h6 {{
   border-right: 1px solid {PALETTE['border']};
 }}
 
-/* Buttons - clean and modern */
+/* Animated XP Progress Bar */
+.stProgress > div > div {{
+  background: linear-gradient(90deg, #7eb8d1, #a0cfe0, #7eb8d1);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}}
+
+@keyframes shimmer {{
+  0% {{ background-position: 200% 0; }}
+  100% {{ background-position: -200% 0; }}
+}}
+
+/* Buttons with pulse effect */
 button, .stButton>button {{
   background: linear-gradient(135deg, {PALETTE['accent']} 0%, #a0cfe0 100%);
   color: #ffffff !important;
@@ -79,16 +98,36 @@ button, .stButton>button {{
   border-radius: 12px;
   padding: 10px 24px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.3s;
   box-shadow: 0 2px 8px rgba(126, 184, 209, 0.25);
+  position: relative;
+  overflow: hidden;
 }}
 
 button:hover, .stButton>button:hover {{
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(126, 184, 209, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(126, 184, 209, 0.4);
 }}
 
-/* Hero block - cleaner, more centered */
+button::before, .stButton>button::before {{
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}}
+
+button:hover::before, .stButton>button:hover::before {{
+  width: 300px;
+  height: 300px;
+}}
+
+/* Hero block with constellation background */
 .hero {{
   background: linear-gradient(135deg, #e8f4f8 0%, #f5fbff 100%);
   border-radius: 28px;
@@ -97,10 +136,35 @@ button:hover, .stButton>button:hover {{
   text-align: center;
   box-shadow: 0 4px 24px rgba(90, 138, 158, 0.12);
   border: 1px solid {PALETTE['border']};
+  position: relative;
+  overflow: hidden;
+}}
+
+/* Floating particles animation */
+.hero::before {{
+  content: '⚗️ 🔬 🧬 🧪 ⚡ 🌟 💡 🔭';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 24px;
+  opacity: 0.15;
+  animation: float 20s linear infinite;
+  pointer-events: none;
+  word-spacing: 60px;
+  line-height: 80px;
+}}
+
+@keyframes float {{
+  0% {{ transform: translateY(100%) rotate(0deg); }}
+  100% {{ transform: translateY(-100%) rotate(360deg); }}
 }}
 
 .hero h1 {{ 
-  margin: 0 0 12px; 
+  margin: 0 0 12px;
+  position: relative;
+  z-index: 1;
 }}
 
 .hero p {{ 
@@ -108,20 +172,35 @@ button:hover, .stButton>button:hover {{
   color: {PALETTE['body_text']}; 
   font-size: 1.1rem;
   font-weight: 400;
+  position: relative;
+  z-index: 1;
 }}
 
-/* Mascot styling */
+/* Animated mascot bounce */
 .hero img {{
   filter: drop-shadow(0 4px 12px rgba(90, 138, 158, 0.15));
   border-radius: 20px;
+  animation: bounce 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }}
 
-/* Mission cards */
-.stColumn > div {{
-  padding: 12px;
+@keyframes bounce {{
+  0%, 100% {{ transform: translateY(0); }}
+  50% {{ transform: translateY(-10px); }}
 }}
 
-/* Daily challenge box */
+.hero img:hover {{
+  animation: wave 0.5s ease-in-out;
+}}
+
+@keyframes wave {{
+  0%, 100% {{ transform: rotate(0deg); }}
+  25% {{ transform: rotate(-10deg); }}
+  75% {{ transform: rotate(10deg); }}
+}}
+
+/* Flipable daily challenge card */
 .daily-challenge {{
   background: linear-gradient(135deg, #fff9e6 0%, #fffef5 100%);
   border-radius: 20px;
@@ -129,6 +208,76 @@ button:hover, .stButton>button:hover {{
   margin: 20px 0;
   border: 2px solid #ffe9a0;
   box-shadow: 0 2px 12px rgba(255, 200, 87, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}}
+
+.daily-challenge:hover {{
+  transform: rotateY(5deg) scale(1.02);
+  box-shadow: 0 8px 24px rgba(255, 200, 87, 0.3);
+}}
+
+/* Mission cards */
+.stColumn > div {{
+  padding: 12px;
+}}
+
+/* Quick experiment button - special styling */
+.quick-experiment {{
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  color: white;
+  padding: 16px 32px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 4px 20px rgba(255, 107, 157, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}}
+
+@keyframes pulse {{
+  0%, 100% {{ box-shadow: 0 4px 20px rgba(255, 107, 157, 0.3); }}
+  50% {{ box-shadow: 0 4px 30px rgba(255, 107, 157, 0.5); }}
+}}
+
+.quick-experiment:hover {{
+  transform: scale(1.05) rotate(-2deg);
+  animation: none;
+}}
+
+/* Badge styling */
+.badge {{
+  display: inline-block;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  border-radius: 20px;
+  font-weight: 600;
+  color: #8b6914;
+  margin: 4px;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  animation: badgePop 0.5s ease;
+}}
+
+@keyframes badgePop {{
+  0% {{ transform: scale(0); }}
+  50% {{ transform: scale(1.2); }}
+  100% {{ transform: scale(1); }}
+}}
+
+/* Stats counter animation */
+.stats-counter {{
+  font-size: 2rem;
+  font-weight: 700;
+  color: {PALETTE['accent']};
+  animation: countUp 1s ease-out;
+}}
+
+@keyframes countUp {{
+  from {{ opacity: 0; transform: translateY(20px); }}
+  to {{ opacity: 1; transform: translateY(0); }}
 }}
 
 /* Chat input styling */
@@ -141,10 +290,49 @@ a {{
   color: {PALETTE['accent']} !important;
   text-decoration: none;
   font-weight: 500;
+  transition: all 0.2s;
 }}
 
 a:hover {{
   color: {PALETTE['header_text']} !important;
+  transform: translateX(4px);
+}}
+
+/* Streak calendar styling */
+.streak-calendar {{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 16px;
+  background: {PALETTE['bg_card']};
+  border-radius: 16px;
+  margin: 16px 0;
+}}
+
+.streak-day {{
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  transition: all 0.3s;
+}}
+
+.streak-day.active {{
+  background: linear-gradient(135deg, {PALETTE['accent']} 0%, #a0cfe0 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(126, 184, 209, 0.3);
+}}
+
+.streak-day.inactive {{
+  background: #f0f0f0;
+  color: #ccc;
+}}
+
+.streak-day:hover {{
+  transform: scale(1.1);
 }}
 
 </style>
@@ -154,16 +342,21 @@ a:hover {{
 
 
 def header_with_mascot(title: str, subtitle: str = "", mascot_path: str = "assets/dr_curio.png", size_px: int = 120) -> None:
-    """Render a clean hero header with mascot - inspired by modern UI."""
+    """Render an animated hero header with mascot and particle effects."""
     img_html = ""
     if os.path.exists(mascot_path):
-        b64 = base64.b64encode(open(mascot_path, "rb").read()).decode()
-        img_html = f"<img src='data:image/png;base64,{b64}' style='width:{size_px}px;height:{size_px}px;'>"
+        try:
+            b64 = base64.b64encode(open(mascot_path, "rb").read()).decode()
+            img_html = f"<img src='data:image/png;base64,{b64}' style='width:{size_px}px;height:{size_px}px;'>"
+        except Exception:
+            img_html = f"<div style='font-size:{size_px}px;line-height:1;'>🧪</div>"
+    else:
+        img_html = f"<div style='font-size:{size_px}px;line-height:1;'>🧪</div>"
     
     st.markdown(
         f"""
         <div class="hero">
-          <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:16px;position:relative;z-index:1;">
             {img_html}
             <h1>{title}</h1>
           </div>
