@@ -23,16 +23,16 @@ def apply_global_theme() -> None:
 
 /* Base typography everywhere */
 html, body, .stApp, .stMarkdown, .stText, .stDataFrame, .stTextInput, .stButton,
-.stSidebar, .stSidebar * , [class^="css"], [data-testid="stSidebar"], [data-testid="stMarkdownContainer"] * {
+.stSidebar, .stSidebar * , [class^="css"], [data-testid="stSidebar"], [data-testid="stMarkdownContainer"] * {{
   font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif !important;
   color: {PALETTE['body_text']} !important;
-}
+}}
 
-h1, h2, h3, h4, h5, h6, .hero h1, .hero h2, .hero h3 {
+h1, h2, h3, h4, h5, h6, .hero h1, .hero h2, .hero h3 {{
   font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif !important;
   font-weight: 900 !important; /* ExtraBold */
   color: {PALETTE['header_text']} !important;
-}
+}}
 
 /* App background and cards */
 .stApp {{ background: {PALETTE['bg_light']}; }}
@@ -86,5 +86,3 @@ def header_with_mascot(title: str, subtitle: str = "", mascot_path: str = "asset
         """,
         unsafe_allow_html=True,
     )
-
-
