@@ -133,17 +133,22 @@ st.markdown("---")
 st.subheader("🤖 Science Buddy")
 st.caption("Ask simple questions and get friendly, accurate explanations.")
 
-# Try to get API key from Streamlit secrets first, then environment variable
-try:
-    OPENAI = st.secrets.get("OPENAI_API_KEY", None)
-except:
-    OPENAI = os.getenv("OPENAI_API_KEY")
-
-if not OPENAI:
-    st.info("💡 Add your `OPENAI_API_KEY` to Streamlit secrets to enable the Science Buddy chat!")
-else:
-    q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
-    if q:
+q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
+if q:
+    # Try to get API key from Streamlit secrets first, then environment variable
+    OPENAI = None
+    try:
+        if "OPENAI_API_KEY" in st.secrets:
+            OPENAI = st.secrets["OPENAI_API_KEY"]
+        elif hasattr(st.secrets, "OPENAI_API_KEY"):
+            OPENAI = st.secrets.OPENAI_API_KEY
+    except Exception:
+        pass
+    
+    if not OPENAI:
+        OPENAI = os.getenv("OPENAI_API_KEY")
+    
+    if OPENAI:
         try:
             import openai
             openai.api_key = OPENAI
@@ -158,6 +163,28 @@ else:
             st.chat_message("assistant").write(resp.choices[0].message.content)
         except Exception as e:
             st.chat_message("assistant").write(f"Oops! {e}")
+    else:
+        # Fallback responses when no API key
+        responses = {
+            "green": "Great question! 🌿 Plants are green because of chlorophyll, a special pigment in their leaves. Chlorophyll absorbs red and blue light from the sun for photosynthesis, but reflects green light back to our eyes. That's why we see them as green!",
+            "sky": "Awesome question! 🌤️ The sky is blue because of something called Rayleigh scattering. Sunlight is made of all colors, but blue light has shorter waves that scatter more when hitting air molecules. That scattered blue light reaches our eyes from all directions, making the sky look blue!",
+            "rain": "Good thinking! 🌧️ Rain forms when water vapor in clouds condenses into droplets. As the droplets get bigger and heavier, gravity pulls them down to Earth. Temperature, air pressure, and humidity all work together to create rain!",
+            "stars": "Amazing question! ⭐ Stars twinkle because their light passes through Earth's atmosphere, which is constantly moving. The moving air bends and bounces the light around, making stars appear to flicker. In space, stars don't twinkle at all!",
+            "moon": "Great observation! 🌙 The Moon doesn't make its own light - it reflects light from the Sun! We see different moon phases because the Sun lights up different parts of the Moon as it orbits Earth. A full moon happens when the Sun lights up the whole side facing us!",
+        }
+        
+        # Find best match
+        q_lower = q.lower()
+        response = None
+        for keyword, answer in responses.items():
+            if keyword in q_lower:
+                response = answer
+                break
+        
+        if not response:
+            response = "That's a great science question! 🔬 I'm running in demo mode right now. To get AI-powered answers to all your questions, ask your teacher to add an OpenAI API key to the app settings. In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
+        
+        st.chat_message("assistant").write(response)
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
