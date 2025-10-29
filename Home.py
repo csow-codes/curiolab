@@ -190,7 +190,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 daily_options = [
-    (Measure temperature 3 times today", "Tip: Check morning, noon, and evening. Notice the pattern?"),
+    ("Measure temperature 3 times today", "Tip: Check morning, noon, and evening. Notice the pattern?"),
     ("Observe cloud types for 10 minutes", "Tip: Cumulus = fluffy, Stratus = flat layers, Cirrus = wispy!"),
     ("Sketch 3 different leaves you find", "Tip: Look at the edges, veins, and shape. Are they symmetrical?"),
     ("Count bees or butterflies for 10 minutes", "Tip: Stay still and quiet. What flowers do they visit most?"),
