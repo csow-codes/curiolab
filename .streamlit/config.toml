@@ -1,13 +1,6 @@
 [theme]
-primaryColor="#a78bfa"              # lavender accent
-backgroundColor="#fffdfc"           # off-white background
-secondaryBackgroundColor="#f8f4ff"  # pale lilac panels
-textColor="#1f2937"                 # soft gray text
-font="sans serif"
-
-[theme]
-primaryColor="#a78bfa"
-backgroundColor="#fffdfc"
-secondaryBackgroundColor="#f8f4ff"
-textColor="#1f2937"
+primaryColor="#3b82f6"              # Curio Lab blue (matches bear goggles)
+backgroundColor="#f8fafc"           # soft white background
+secondaryBackgroundColor="#e0f2fe" # light blue panels (matches lab theme)
+textColor="#1e3a8a"                 # deep blue text
 font="sans serif"

@@ -1,132 +1,345 @@
-import os, datetime as dt
+import os, datetime as dt, json, base64
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
 
 st.set_page_config(page_title="Air & Weather", page_icon="🌤️", layout="wide")
 
-def cute_box(text: str, bg="#f8f4ff"):
-    st.markdown(f"<div style='background:{bg};padding:14px 18px;border-radius:16px;border:1px solid #ede9fe;line-height:1.55'>{text}</div>", unsafe_allow_html=True)
+# Super cute styling
+st.markdown("""
+<style>
+.hero {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ecfccb 100%);
+    padding: 40px 50px;
+    border-radius: 28px;
+    margin-bottom: 28px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(125,211,252,0.25);
+}
+.hero h1 {font-size: 3rem; color: #0c4a6e; margin: 0; text-shadow: 2px 2px 4px rgba(14,165,233,0.15);}
+.hero p {color: #075985; font-size: 1.3rem; margin: 8px 0 0 0;}
+</style>
+""", unsafe_allow_html=True)
 
-os.makedirs("data", exist_ok=True)
-DATA_PATH = "data/logs_air.csv"
-if not os.path.exists(DATA_PATH):
-    pd.DataFrame(columns=["date","location","temperature_c","temperature_label","rainfall_mm","rainfall_label","air_quality_pm","air_quality_label","observation"]).to_csv(DATA_PATH, index=False)
+def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
+    st.markdown(f"""
+    <div style='background:{bg};padding:18px 24px;border-radius:20px;border:2px solid #7dd3fc;line-height:1.7;box-shadow:0 3px 10px rgba(125,211,252,0.2);font-size:1.05rem;'>
+        <span style='font-size:1.4rem;'>{emoji}</span> {text} <span style='font-size:1.4rem;'>✨</span>
+    </div>
+    """, unsafe_allow_html=True)
 
-def load_data():
-    df = pd.read_csv(DATA_PATH)
-    if not df.empty:
-        df["date"] = pd.to_datetime(df["date"]).dt.date
+def info_card(title, content, color="#e0f2fe"):
+    st.markdown(f"""
+    <div style='background:{color};padding:20px;border-radius:16px;border-left:4px solid #0ea5e9;margin:12px 0;'>
+        <h4 style='color:#075985;margin-top:0;'>{title}</h4>
+        <p style='color:#374151;margin-bottom:0;'>{content}</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+os.makedirs("data", exist_ok=True); os.makedirs("assets/cards", exist_ok=True)
+DATA = "data/logs_air.csv"
+if not os.path.exists(DATA):
+    pd.DataFrame(columns=["date","location","temperature_c","temperature_label","rainfall_mm","rainfall_label","air_quality_pm","air_quality_label","observation"]).to_csv(DATA, index=False)
+
+def load_df():
+    df = pd.read_csv(DATA)
+    if not df.empty: df["date"] = pd.to_datetime(df["date"]).dt.date
     return df
 
-def save_row(row):
-    df = load_data()
-    df.loc[len(df)] = row
-    df.to_csv(DATA_PATH, index=False)
+def append_row(row):
+    df = load_df(); df.loc[len(df)] = row; df.to_csv(DATA, index=False)
 
-st.markdown("## 🌤️ Air & Weather — Local Observations")
-cute_box("Kid-friendly inputs map to numbers automatically. Advanced panel lets you enter exact measurements.")
+def add_xp(days=1):
+    prof = {}
+    if os.path.exists("profile.json"):
+        try: prof = json.load(open("profile.json","r"))
+        except: prof = {}
+    prof.setdefault("xp",0); prof.setdefault("streak_days",0); prof.setdefault("last_log_date", None)
+    today = str(dt.date.today())
+    # streak logic
+    if prof["last_log_date"]:
+        last = dt.datetime.strptime(prof["last_log_date"], "%Y-%m-%d").date()
+        if (dt.date.today() - last).days == 1:
+            prof["streak_days"] += 1
+    else:
+        prof["streak_days"] = 1
+    prof["last_log_date"] = today
+    prof["xp"] += 5  # +5 XP per entry
+    json.dump(prof, open("profile.json","w"))
 
-left, right = st.columns([1,2], gap="large")
+def create_beautiful_chart(df, metric, color="#0ea5e9", emoji="🌤️"):
+    fig, ax = plt.subplots(figsize=(10, 6), facecolor='#f0f9ff')
+    
+    ax.plot(pd.to_datetime(df["date"]), df[metric], marker="o", linewidth=3, 
+            markersize=11, color=color, markerfacecolor='#e0f2fe', 
+            markeredgewidth=2.5, markeredgecolor=color)
+    ax.fill_between(pd.to_datetime(df["date"]), 0, df[metric], 
+                    alpha=0.3, color=color)
+    
+    titles = {"temperature_c": ("🌡️ Temperature Over Time 🌡️", "°C"),
+              "rainfall_mm": ("🌧️ Rainfall Over Time 🌧️", "mm"),
+              "air_quality_pm": ("💨 Air Quality (PM2.5) Over Time 💨", "µg/m³")}
+    
+    title, unit = titles.get(metric, (f"{emoji} {metric}", ""))
+    ax.set_title(title, fontsize=16, color='#0c4a6e', pad=20, weight='bold')
+    ax.set_xlabel("📅 Date", fontsize=13, color='#0ea5e9', weight='bold')
+    ax.set_ylabel(f"📊 {unit}", fontsize=13, color='#0ea5e9', weight='bold')
+    ax.grid(True, alpha=0.4, linestyle='--', color='#7dd3fc', linewidth=1.5)
+    ax.set_facecolor('#f0f9ff')
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_color('#7dd3fc')
+    ax.spines['bottom'].set_color('#7dd3fc')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    return fig
+
+# Hero Section with CurioLab & Dr. Curio
+logo_path = "avatars/curio_logo.png"
+if os.path.exists(logo_path):
+    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
+    st.markdown(f"""
+    <div class='hero'>
+      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
+        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:80px;height:80px;border-radius:14px;'>
+        <h1>🌤️ Air & Weather Lab 🌤️</h1>
+        <span class='logo-curio' style='font-size:3rem'>🔬</span>
+      </div>
+      <p>Join <strong>Dr. Curio</strong> in tracking air quality, weather patterns, and becoming a climate scientist! 🌈✨</p>
+    </div>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <div class='hero'>
+      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
+        <span class='logo-curio' style='font-size:3rem'>🦫</span>
+        <h1>🌤️ Air & Weather Lab 🌤️</h1>
+        <span class='logo-curio' style='font-size:3rem'>🔬</span>
+      </div>
+      <p>Join <strong>Dr. Curio</strong> in tracking air quality, weather patterns, and becoming a climate scientist! 🌈✨</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Quick Tip
+cute_box("💡 Pro Tip: Note clouds, wind, and smells to understand local air quality! Use the kid-friendly choices or advanced numbers for exact measurements!", bg="#e0f2fe", emoji="🌟")
+
+# Educational fun facts
+st.markdown("### 🧪 Weather & Air Quality Facts")
+c1, c2, c3 = st.columns(3)
+with c1:
+    info_card("🌡️ Temperature Science", "Temperature affects air density! Warm air rises (that's why balloons go up!), cold air sinks!", "#e0f2fe")
+with c2:
+    info_card("💨 PM2.5 Explained", "PM2.5 are tiny particles 30x smaller than a hair! They can enter our lungs, so we track them!", "#f0f9ff")
+with c3:
+    info_card("🌧️ Rainfall Patterns", "Rain helps clean the air by washing particles away! But too much rain means watching for flooding!", "#ecfccb")
+
+st.markdown("---")
+
+# Main input section
+st.markdown("### 📝 Your Weather Journal")
+left, right = st.columns([1.2, 2], gap="large")
 
 with left:
-    st.markdown("### Add an observation")
-    date = st.date_input("Date", value=dt.date.today())
-    location = st.text_input("Location (e.g., school garden)", value="My place")
-
-    temp_choice = st.selectbox("Temperature (how did it feel?)", ["Cold 🧊","Mild 🙂","Warm 🌤️","Hot 🔥"])
+    st.markdown("#### ✍️ Add New Observation")
+    date = st.date_input("📅 Date", value=dt.date.today())
+    location = st.text_input("📍 Location", value="My place")
+    temp_choice = st.selectbox("🌡️ Temperature (feels like)", ["Cold 🧊","Mild 🙂","Warm 🌤️","Hot 🔥"])
     temp_map = {"Cold 🧊":15,"Mild 🙂":25,"Warm 🌤️":30,"Hot 🔥":35}
-    temperature_c = temp_map[temp_choice]
-
-    rain_choice = st.selectbox("Rainfall (how much rain?)", ["None ☀️","Light 🌦️","Moderate 🌧️","Heavy ⛈️"])
+    rainfall_choice = st.selectbox("🌧️ Rainfall", ["None ☀️","Light 🌦️","Moderate 🌧️","Heavy ⛈️"])
     rain_map = {"None ☀️":0,"Light 🌦️":2,"Moderate 🌧️":5,"Heavy ⛈️":10}
-    rainfall_mm = rain_map[rain_choice]
-
-    air_choice = st.selectbox("Air quality (sky look?)", ["Clear 🌈","Hazy 😐","Smoky 😷"])
+    air_choice = st.selectbox("💨 Air quality (sky look)", ["Clear 🌈","Hazy 😐","Smoky 😷"])
     air_map = {"Clear 🌈":10,"Hazy 😐":40,"Smoky 😷":80}
-    air_quality_pm = air_map[air_choice]
+    observation = st.text_area("📝 Notes (clouds, wind, smells, etc.)", height=100, 
+                                placeholder="E.g., 'Clear sky with wispy clouds, gentle breeze, fresh air!'")
 
-    observation = st.text_area("Notes (clouds, wind, smells…)", height=90)
+    temperature_c = temp_map[temp_choice]
+    rainfall_mm = rain_map[rainfall_choice]
+    air_pm = air_map[air_choice]
 
-    with st.expander("Advanced numbers (optional)"):
+    with st.expander("🔧 Advanced numbers (optional)"):
         temperature_c = st.number_input("Exact temperature (°C)", value=float(temperature_c), step=0.1)
         rainfall_mm = st.number_input("Exact rainfall (mm)", value=float(rainfall_mm), step=0.1)
-        air_quality_pm = st.number_input("Exact PM2.5 (µg/m³)", value=float(air_quality_pm), step=0.1)
+        air_pm = st.number_input("Exact PM2.5 (µg/m³)", value=float(air_pm), step=0.1)
 
-    if st.button("Add to LearnLab", type="primary"):
-        save_row([str(date),location,temperature_c,temp_choice,rainfall_mm,rain_choice,air_quality_pm,air_choice,observation])
-        st.success("Saved! See your charts →")
+    if st.button("✨ Add to Journal", type="primary", use_container_width=True):
+        append_row([str(date),location,temperature_c,temp_choice,rainfall_mm,rainfall_choice,air_pm,air_choice,observation])
+        add_xp()
+        st.success("🌟 Observation saved! +5 XP earned! 🎉")
+        st.balloons()
 
-    # CSV tools
-    st.markdown("#### Data tools")
-    if os.path.exists(DATA_PATH):
-        st.download_button("⬇️ Download CSV", data=open(DATA_PATH,"rb").read(), file_name="logs_air.csv")
+    if os.path.exists(DATA):
+        st.download_button("📥 Download Your Data (CSV)", data=open(DATA,"rb").read(), 
+                          file_name="air_weather_log.csv", use_container_width=True)
 
 with right:
-    st.markdown("### Your data")
-    df = load_data()
+    df = load_df()
+    
     if df.empty:
-        st.info("No data yet. Add your first observation.")
+        cute_box("🌈 Start your weather tracking adventure! Add your first observation on the left to see patterns emerge! 🌈", bg="#e0f2fe", emoji="🌤️")
     else:
-        st.dataframe(df.tail(200), use_container_width=True)
-        # quick nudges
-        if df["date"].nunique() < df.shape[0]/2:
-            cute_box("Tip: Try logging once per day around the same time for cleaner patterns ✨", bg="#fff7ed")
-
-        st.markdown("### Charts")
-        # Temperature
-        fig1, ax1 = plt.subplots()
-        ax1.plot(pd.to_datetime(df["date"]), df["temperature_c"], marker="o")
-        ax1.set_title("Temperature over time"); ax1.set_xlabel("Date"); ax1.set_ylabel("°C")
+        # Weather Stats
+        st.markdown("#### 📊 Your Weather Stats")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            avg_temp = df['temperature_c'].mean()
+            st.metric("🌡️ Avg Temperature", f"{avg_temp:.1f}°C")
+        with col2:
+            total_rain = df['rainfall_mm'].sum()
+            st.metric("🌧️ Total Rainfall", f"{total_rain:.1f}mm")
+        with col3:
+            avg_pm = df['air_quality_pm'].mean()
+            pm_status = "Good 🌈" if avg_pm < 30 else "Moderate 😐" if avg_pm < 60 else "Unhealthy 😷"
+            st.metric("💨 Avg Air Quality", pm_status)
+        with col4:
+            st.metric("📅 Observation Days", f"{len(df)}")
+        
+        # Data-quality nudge
+        if len(df) >= 2:
+            tmp = df.sort_values("date")
+            if abs(tmp["temperature_c"].iloc[-1] - tmp["temperature_c"].iloc[-2]) > 10:
+                cute_box("⚠️ Temperature changed >10°C from last entry. Double-check the measurements! 🔍", bg="#fff7ed", emoji="💡")
+        
+        # Beautiful charts
+        st.markdown("---")
+        st.markdown("#### 📈 Weather Trends")
+        fig1 = create_beautiful_chart(df, "temperature_c", "#0ea5e9", "🌡️")
         st.pyplot(fig1)
-        # Rainfall
-        fig2, ax2 = plt.subplots()
-        ax2.plot(pd.to_datetime(df["date"]), df["rainfall_mm"], marker="o")
-        ax2.set_title("Rainfall over time"); ax2.set_xlabel("Date"); ax2.set_ylabel("mm")
+        
+        st.markdown("---")
+        fig2 = create_beautiful_chart(df, "rainfall_mm", "#06b6d4", "🌧️")
         st.pyplot(fig2)
-        # PM2.5
-        fig3, ax3 = plt.subplots()
-        ax3.plot(pd.to_datetime(df["date"]), df["air_quality_pm"], marker="o")
-        ax3.set_title("PM2.5 over time"); ax3.set_xlabel("Date"); ax3.set_ylabel("µg/m³")
+        
+        st.markdown("---")
+        fig3 = create_beautiful_chart(df, "air_quality_pm", "#8b5cf6", "💨")
         st.pyplot(fig3)
 
-        st.markdown("### Mini Science Report")
-        OPENAI_KEY = os.getenv("OPENAI_API_KEY")
-
+        # Data table
+        st.markdown("---")
+        st.markdown("#### 📋 All Your Observations")
+        st.dataframe(df[["date", "location", "temperature_c", "rainfall_mm", "air_quality_pm", "observation"]].tail(10), 
+                     use_container_width=True, hide_index=True)
+        
+        # Mini Science Report
+        st.markdown("---")
+        st.markdown("### 🔬 Your Mini Science Report")
+        OPENAI = os.getenv("OPENAI_API_KEY")
         def ai_report(rows: pd.DataFrame) -> str:
             sub = rows[["date","location","temperature_c","rainfall_mm","air_quality_pm","observation"]].copy()
-            if not OPENAI_KEY:
-                days = sub.shape[0]
-                t = round(sub["temperature_c"].astype(float).mean(),1)
-                r = round(sub["rainfall_mm"].astype(float).sum(),1)
-                pm = round(sub["air_quality_pm"].astype(float).mean(),1)
-                return (f"**Mini Science Report**\n\n"
-                        f"- You logged {days} day(s).\n"
-                        f"- Avg temp: {t} °C; total rain: {r} mm; avg PM2.5: {pm}.\n"
-                        f"- Look: do warm days match less rain?\n\n"
-                        f"**Try next:** Compare the haziest day vs clearest day.")
+            if not OPENAI:
+                return ("**🌟 Your Amazing Weather Journey!**\n\n"
+                        "You're tracking the climate! 🌤️\n\n"
+                        "**Patterns to Look For:**\n"
+                        "- Hot days often have clearer skies\n"
+                        "- Rain helps clean the air!\n"
+                        "- Location affects air quality\n\n"
+                        "**Try Next:** Track temperature at the same time each day for a week! 📊")
             try:
                 import openai
-                openai.api_key = OPENAI_KEY
-                SYSTEM = "You are a friendly science mentor. Keep language simple and encouraging."
-                PROMPT = ("Given this table [date, location, temperature_c, rainfall_mm, air_quality_pm, observation], "
-                          "write 2 patterns and 1 next-week question. 120 words max. Do not invent data.\n\nDATA:\n"
-                          + sub.to_csv(index=False))
-                resp = openai.chat.completions.create(
-                    model="gpt-4o-mini",
+                openai.api_key = OPENAI
+                SYSTEM="You are a friendly, enthusiastic climate science mentor who loves helping kids understand weather and air quality!"
+                PROMPT=("Given [date, location, temperature_c, rainfall_mm, air_quality_pm, observation], "
+                        "write a fun summary for kids. Mention 2 patterns about weather and air quality, and 1 simple experiment to try next. "
+                        "Keep it under 120 words and exciting! Use emojis. Do not invent data.\n\nDATA:\n"+sub.to_csv(index=False))
+                resp=openai.chat.completions.create(model="gpt-4o-mini",
                     messages=[{"role":"system","content":SYSTEM},{"role":"user","content":PROMPT}],
-                    temperature=0.3, max_tokens=220
-                )
+                    temperature=0.4, max_tokens=220)
                 return resp.choices[0].message.content.strip()
             except Exception as e:
-                return f"AI unavailable: {e}\n\nTry comparing sunny vs rainy days manually."
-
-        window = st.selectbox("Report window (days)", [7,14,30], index=0)
+                return f"🤖 AI unavailable: {e}"
+        
+        window = st.selectbox("📊 Report window (days)", [7, 14, 30], index=0)
         recent = df.sort_values("date").tail(window)
-        report_text = ai_report(recent)
-        st.markdown(report_text)
-        st.text_area("Copy & share this report:", value=report_text, height=120)
+        txt = ai_report(recent)
+        
+        cute_box(txt, bg="#ecfccb", emoji="🔬")
+        st.text_area("💌 Copy & share your science!", value=txt, height=120)
 
-        st.markdown("---")
-        st.subheader("Lesson: What is PM2.5?")
-        st.write("PM2.5 are tiny particles that can go deep into the lungs. Lower numbers are better. On high-PM days, try to limit outdoor activity and avoid busy roads if possible.")
+        # Science Story Card
+        if st.button("📜 Create Science Story Card!", use_container_width=True):
+            card = Image.new("RGB", (520, 720), "#fffdfc")
+            d = ImageDraw.Draw(card)
+            
+            try:
+                title_font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Verdana.ttf", 32)
+                body_font = ImageFont.truetype("/System/Library/Fonts/Supplemental/Verdana.ttf", 18)
+            except:
+                title_font = ImageFont.load_default()
+                body_font = ImageFont.load_default()
+            
+            d.text((40, 40), "🌤️ Air & Weather — Science Card", fill="#0ea5e9", font=title_font)
+            
+            body = (txt[:600] + "...") if len(txt) > 600 else txt
+            words = body.split()
+            lines = []
+            current_line = ""
+            for word in words:
+                if len(current_line + " " + word) < 55:
+                    current_line += " " + word if current_line else word
+                else:
+                    if current_line:
+                        lines.append(current_line)
+                    current_line = word
+            if current_line:
+                lines.append(current_line)
+            
+            y = 120
+            for line in lines:
+                d.text((40, y), line[:60], fill="#374151", font=body_font)
+                y += 35
+            
+            out = "assets/cards/air_story_card.png"
+            card.save(out)
+            st.image(out, width=400)
+            st.download_button("📥 Download Your Science Card!", 
+                              data=open(out, "rb").read(), 
+                              file_name="Air_Story_Card.png")
+
+# Educational section
+st.markdown("---")
+st.markdown("### 🌿 Fun Learning Zone")
+
+tab1, tab2, tab3 = st.tabs(["🌡️ Temperature Science", "💨 Air Quality Explained", "🌧️ Weather Patterns"])
+with tab1:
+    st.markdown("""
+    <div style='padding:20px;background:#e0f2fe;border-radius:16px;'>
+        <h3>🌡️ The Science of Temperature</h3>
+        <p><strong>🌡️ What is Temperature?</strong><br>
+        Temperature measures how hot or cold something is. It affects everything around us!</p>
+        <p><strong>🔥 Hot Air Rises:</strong> Warm air is lighter and rises into the sky. That's why hot air balloons work!</p>
+        <p><strong>❄️ Cold Air Sinks:</strong> Cold air is heavier and sinks down. That's why valleys get colder!</p>
+        <p><strong>☀️ Sun Power:</strong> The sun heats the earth's surface. Different places get different amounts of sunlight!</p>
+        <p><strong>🌍 Layers of Air:</strong> The atmosphere has layers with different temperatures. Space is very cold, but near volcanoes it's hot!</p>
+        <p><strong>📊 Why Track It:</strong> Temperature affects our health, plants, animals, and even how much energy we need!</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tab2:
+    st.markdown("""
+    <div style='padding:20px;background:#f0f9ff;border-radius:16px;'>
+        <h3>💨 Air Quality & PM2.5</h3>
+        <p><strong>💨 What is PM2.5?</strong><br>
+        PM2.5 are tiny particles 30x smaller than a human hair! They float in the air we breathe.</p>
+        <p><strong>😷 Where They Come From:</strong> Cars, factories, fires, and even nature (pollen, dust). Some sources are natural, some are from human activity.</p>
+        <p><strong>❤️ Why It Matters:</strong> These tiny particles can get deep into our lungs and affect our health. Clean air is important!</p>
+        <p><strong>🌈 Clear Air:</strong> PM2.5 below 30 µg/m³ is considered good quality air!</p>
+        <p><strong>🌿 Nature Helps:</strong> Trees and plants filter air naturally! They're nature's air purifiers!</p>
+        <p><strong>📈 Your Role:</strong> By tracking air quality, you're helping scientists understand local pollution patterns!</p>
+        <p><strong>🌬️ Wind Helps:</strong> Wind can blow pollution away and bring fresh air from other places!</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with tab3:
+    st.markdown("""
+    <div style='padding:20px;background:#ecfccb;border-radius:16px;'>
+        <h3>🌧️ Weather Patterns & Climate</h3>
+        <p><strong>🌧️ Why Does It Rain?</strong><br>
+        When water evaporates from lakes and oceans, it rises and cools, forming clouds. When clouds get heavy, rain falls!</p>
+        <p><strong>☁️ Types of Clouds:</strong> Different clouds mean different weather! Cumulus = fluffy fair weather, Stratus = gray rain clouds!</p>
+        <p><strong>🌬️ Wind Patterns:</strong> Wind is caused by differences in air pressure. Warm and cold air meet and create movement!</p>
+        <p><strong>🌍 Local Weather:</strong> Your local area (mountains, oceans, cities) affects your weather patterns!</p>
+        <p><strong>📅 Seasons:</strong> Weather changes with seasons because Earth tilts as it orbits the sun!</p>
+        <p><strong>🔍 Your Data:</strong> By tracking weather over time, you can predict patterns and understand your local climate!</p>
+    </div>
+    """, unsafe_allow_html=True)
