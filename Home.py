@@ -1,5 +1,6 @@
 import streamlit as st, json, os, random, datetime as dt
 from lang import t
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="LearnLab — Home", page_icon="🧪", layout="wide")
 
@@ -20,41 +21,11 @@ prof.setdefault("last_log_date", None)
 LANG = prof["language"]
 
 # ---------- CSS: animated hero + cute UI ----------
-st.markdown("""
-<style>
-/* Import fonts */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
-
-/* Global typography */
-html, body, [class^="css"]  {
-  font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
-  color: #a4a4a4; /* Poppins Light gray */
-}
-h1, h2, h3, .hero h1, .hero h3 { 
-  font-family: 'Nunito', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif; 
-  font-weight: 900; /* Extra Bold */
-  color: #7c9aa8; /* header color */
-}
-p, li, span, div { color: #a4a4a4; }
-
-/* Hero block visuals remain */
-.hero{background:linear-gradient(135deg,#f8f4ff 0%,#fffdfc 100%);border-radius:20px;padding:40px 60px;margin-bottom:28px;text-align:center;box-shadow:0 0 10px rgba(167,139,250,.15)}
-.hero h1{font-size:2.6rem;margin:0 0 8px}
-.hero h3{font-weight:400;font-size:1.2rem;margin:0}
-.floaty{animation:float 4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.card:hover{transform:scale(1.01)}
-</style>
-""", unsafe_allow_html=True)
+apply_global_theme()
 
 # ---------- sidebar avatar / XP ----------
 with st.sidebar:
     st.markdown("### 🏠 Scientist Homebase")
-    # Dr. Curio logo (place your image at avatars/dr_curio.png or assets/dr_curio.png)
-    for _logo_path in ("avatars/dr_curio.png", "assets/dr_curio.png"):
-        if os.path.exists(_logo_path):
-            st.image(_logo_path, width=140, caption="Dr. Curio")
-            break
     if prof.get("avatar") and os.path.exists(prof["avatar"]):
         st.image(prof["avatar"], width=120, caption=prof.get("name","Scientist"))
     st.progress(min(prof["xp"] % 100, 100))
@@ -68,16 +39,13 @@ with st.sidebar:
     except Exception:
         st.write("Pages will appear after you rename/add them.")
 
-# ---------- Hero ----------
-st.markdown("""
-<div class="hero">
-  <h1>🧪 LearnLab</h1>
-  <h3>Where curiosity becomes real research ✨</h3>
-  <p style="color:#555;margin-top:6px;">Turn any classroom or backyard into a mini research lab.</p>
-  <img class="floaty" src="https://cdn-icons-png.flaticon.com/512/4148/4148460.png" width="60">
-  <img class="floaty" src="https://cdn-icons-png.flaticon.com/512/766/766513.png" width="60">
-</div>
-""", unsafe_allow_html=True)
+# ---------- Hero with logo on Home ----------
+header_with_mascot(
+    title="🧪 CurioLab",
+    subtitle="Where curiosity becomes real research ✨",
+    mascot_path="assets/dr_curio.png",
+    size_px=96,
+)
 
 # ---------- Daily challenge ----------
 daily_options = [

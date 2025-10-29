@@ -1,6 +1,9 @@
 import streamlit as st, json, os, random, base64
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Get Started", page_icon="🔬", layout="wide")
+apply_global_theme()
+header_with_mascot("Welcome to CurioLab", "Meet Dr. Curio and set up your profile.")
 
 def cute_box(text: str, bg="#e0f2fe"):
     st.markdown(

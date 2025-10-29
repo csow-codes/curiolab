@@ -4,33 +4,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
+from theme import apply_global_theme, header_with_mascot
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Air & Weather", page_icon="🌤️", layout="wide")
+apply_global_theme()
+header_with_mascot("Air & Weather Lab", "Track temperature, rainfall, and PM2.5 with Dr. Curio")
+apply_global_theme()
 
 # Super cute styling
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
-html, body, [class^="css"], p, li, span, div { 
-  font-family: 'Poppins', system-ui, sans-serif; 
-  font-weight: 300;
-  color: #a4a4a4;
-}
-h1, h2, h3, h4, .hero h1, .hero h3 { 
-  font-family: 'Nunito', system-ui, sans-serif; 
-  font-weight: 900;
-  color: #7c9aa8;
-}
-.hero {
-    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #ecfccb 100%);
-    padding: 40px 50px;
-    border-radius: 28px;
-    margin-bottom: 28px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(125,211,252,0.25);
-}
-.hero h1 {font-size: 3rem; margin: 0; text-shadow: 2px 2px 4px rgba(14,165,233,0.15);}
-.hero p {color: #a4a4a4; font-size: 1.3rem; margin: 8px 0 0 0; font-weight: 300;}
+.hero { padding: 40px 50px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -107,31 +92,8 @@ def create_beautiful_chart(df, metric, color="#0ea5e9", emoji="🌤️"):
     plt.tight_layout()
     return fig
 
-# Hero Section with CurioLab & Dr. Curio
-logo_path = "avatars/curio_logo.png"
-if os.path.exists(logo_path):
-    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
-    st.markdown(f"""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:80px;height:80px;border-radius:14px;'>
-        <h1>🌤️ Air & Weather Lab 🌤️</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-      <p>Join <strong>Dr. Curio</strong> in tracking air quality, weather patterns, and becoming a climate scientist! 🌈✨</p>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <span class='logo-curio' style='font-size:3rem'>🦫</span>
-        <h1>🌤️ Air & Weather Lab 🌤️</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-      <p>Join <strong>Dr. Curio</strong> in tracking air quality, weather patterns, and becoming a climate scientist! 🌈✨</p>
-    </div>
-    """, unsafe_allow_html=True)
+# Header with mascot in hero
+header_with_mascot("🌤️ Air & Weather Lab", "Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=84)
 
 # Quick Tip
 cute_box("💡 Pro Tip: Note clouds, wind, and smells to understand local air quality! Use the kid-friendly choices or advanced numbers for exact measurements!", bg="#e0f2fe", emoji="🌟")

@@ -1,6 +1,9 @@
 import streamlit as st, json, os, base64, pandas as pd, random
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Modules", page_icon="🗂️", layout="wide")
+apply_global_theme()
+header_with_mascot("CurioLab Modules", "Explore hands-on science missions with Dr. Curio")
 
 # ---------- cute helpers ----------
 def cute_box(text: str, bg="#e0f2fe"):

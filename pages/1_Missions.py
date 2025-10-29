@@ -1,62 +1,28 @@
 import streamlit as st, os, json, pandas as pd, datetime as dt, base64
+from theme import apply_global_theme, header_with_mascot
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Missions", page_icon="🧭", layout="wide")
+apply_global_theme()
+header_with_mascot("CurioLab Missions", "Pick a mission and earn XP! ")
+apply_global_theme()
 
 def cute_box(text: str, bg="#e0f2fe"):
     st.markdown(f"<div style='background:{bg};padding:14px 18px;border-radius:16px;border:1px solid #bfdbfe;line-height:1.55'>{text}</div>", unsafe_allow_html=True)
 
-# CurioLab styling
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
-html, body, [class^="css"], p, li, span, div { 
-  font-family: 'Poppins', system-ui, sans-serif; 
-  font-weight: 300;
-  color: #a4a4a4;
-}
-h1, h2, h3, h4, .hero h1, .hero h3, .card h3 { 
-  font-family: 'Nunito', system-ui, sans-serif; 
-  font-weight: 900;
-  color: #7c9aa8;
-}
-.hero{background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 60%,#ecfccb 100%);border-radius:28px;padding:42px 54px;margin-bottom:28px;text-align:center;box-shadow:0 8px 24px rgba(59,130,246,.18);border:2px solid #bfdbfe}
-.hero h1{font-size:2.4rem;margin:0 0 8px}
-.hero p{color:#a4a4a4;margin:6px 0 0 0;font-weight:300}
-.logo-curio{animation:bounce 2s ease-in-out infinite}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.card{background:#fff;border-radius:20px;border:2px solid #e2e8f0;padding:20px;box-shadow:0 4px 12px rgba(2,6,23,.06)}
-.card h3{margin:0 0 8px;color:#7c9aa8}
+.hero{background:linear-gradient(135deg,#e8f3f8 0%,#f6fbff 60%,#ffffff 100%);border-radius:24px;padding:36px 44px;margin-bottom:20px;text-align:center;box-shadow:0 8px 24px rgba(124,154,168,.18);border:1px solid #dce9f0}
+.card{background:#f6f9fb;border-radius:16px;border:1px solid #e2e8f0;padding:20px;box-shadow:0 4px 12px rgba(2,6,23,.04)}
+.card h3{margin:0 0 8px}
 </style>
 """, unsafe_allow_html=True)
 
 def count_rows(path): 
     return pd.read_csv(path).shape[0] if os.path.exists(path) else 0
 
-# Hero
-logo_path = "avatars/curio_logo.png"
-if os.path.exists(logo_path):
-    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
-    st.markdown(f"""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;'>
-        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:68px;height:68px;border-radius:14px;'>
-        <h1>CurioLab Missions</h1>
-        <span style='font-size:2rem'>🧭</span>
-      </div>
-      <p>Pick a mission with <strong>Dr. Curio</strong> and earn XP by collecting real data!</p>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;'>
-        <span class='logo-curio' style='font-size:2.6rem'>🦫</span>
-        <h1>CurioLab Missions</h1>
-        <span style='font-size:2rem'>🧭</span>
-      </div>
-      <p>Pick a mission with <strong>Dr. Curio</strong> and earn XP by collecting real data!</p>
-    </div>
-    """, unsafe_allow_html=True)
+# Header
+header_with_mascot("CurioLab Missions", "Pick a mission with Dr. Curio and earn XP!", mascot_path="assets/dr_curio.png", size_px=76)
 
 # Progress
 prof = {}

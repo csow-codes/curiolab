@@ -4,35 +4,23 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
+from theme import apply_global_theme, header_with_mascot
+from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Pollinator Patrol", page_icon="🐝", layout="wide")
+apply_global_theme()
+header_with_mascot("Pollinator Patrol", "Count bees and butterflies with Dr. Curio")
+apply_global_theme()
 
 # Super cute styling
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
-html, body, [class^="css"], p, li, span, div { 
-  font-family: 'Poppins', system-ui, sans-serif; 
-  font-weight: 300;
-  color: #a4a4a4;
-}
-h1, h2, h3, h4, .hero h1, .hero h3 { 
-  font-family: 'Nunito', system-ui, sans-serif; 
-  font-weight: 900;
-  color: #7c9aa8;
-}
-.hero {
-    background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #e0f2fe 100%);
-    padding: 40px 50px;
-    border-radius: 28px;
-    margin-bottom: 28px;
-    text-align: center;
-    box-shadow: 0 6px 20px rgba(252,165,165,0.25);
-}
-.hero h1 {font-size: 3rem; margin: 0; text-shadow: 2px 2px 4px rgba(220,38,38,0.15);}
-.hero p {color: #a4a4a4; font-size: 1.3rem; margin: 8px 0 0 0; font-weight: 300;}
+.hero { padding: 40px 50px; }
 </style>
 """, unsafe_allow_html=True)
+
+# Header
+header_with_mascot("🐝 Pollinator Patrol", "Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=84)
 
 def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
     st.markdown(f"""
