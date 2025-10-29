@@ -335,6 +335,119 @@ a:hover {{
   transform: scale(1.1);
 }}
 
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {{
+  gap: 8px;
+}}
+
+.stTabs [data-baseweb="tab"] {{
+  border-radius: 12px;
+  padding: 8px 20px;
+  background: {PALETTE['bg_card']};
+  border: 1px solid {PALETTE['border']};
+  transition: all 0.3s;
+}}
+
+.stTabs [data-baseweb="tab"]:hover {{
+  background: linear-gradient(135deg, {PALETTE['accent']} 0%, #a0cfe0 100%);
+  color: white !important;
+  transform: translateY(-2px);
+}}
+
+.stTabs [aria-selected="true"] {{
+  background: linear-gradient(135deg, {PALETTE['accent']} 0%, #a0cfe0 100%) !important;
+  color: white !important;
+  box-shadow: 0 2px 12px rgba(126, 184, 209, 0.3);
+}}
+
+/* Text input with glow effect */
+.stTextInput input {{
+  border-radius: 12px !important;
+  border: 2px solid {PALETTE['border']} !important;
+  transition: all 0.3s !important;
+}}
+
+.stTextInput input:focus {{
+  border-color: {PALETTE['accent']} !important;
+  box-shadow: 0 0 0 3px rgba(126, 184, 209, 0.1) !important;
+}}
+
+/* Success message animation */
+.stSuccess {{
+  animation: slideIn 0.3s ease;
+}}
+
+@keyframes slideIn {{
+  from {{ 
+    transform: translateX(-20px);
+    opacity: 0;
+  }}
+  to {{ 
+    transform: translateX(0);
+    opacity: 1;
+  }}
+}}
+
+/* Leaderboard hover effects */
+.leaderboard-item {{
+  transition: all 0.3s ease;
+}}
+
+.leaderboard-item:hover {{
+  transform: translateX(8px);
+  box-shadow: 0 2px 12px rgba(90, 138, 158, 0.15);
+}}
+
+/* Checklist items animation */
+@keyframes checkmark {{
+  0% {{ transform: scale(0) rotate(0deg); }}
+  50% {{ transform: scale(1.2) rotate(180deg); }}
+  100% {{ transform: scale(1) rotate(360deg); }}
+}}
+
+/* Gradient text effect for special headings */
+.gradient-text {{
+  background: linear-gradient(135deg, {PALETTE['accent']} 0%, #a0cfe0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}}
+
+/* Floating action button style */
+.fab {{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa06b 100%);
+  box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+  animation: fabPulse 2s infinite;
+}}
+
+@keyframes fabPulse {{
+  0%, 100% {{ 
+    box-shadow: 0 4px 20px rgba(255, 107, 157, 0.4);
+    transform: scale(1);
+  }}
+  50% {{ 
+    box-shadow: 0 4px 30px rgba(255, 107, 157, 0.6);
+    transform: scale(1.05);
+  }}
+}}
+
+.fab:hover {{
+  transform: scale(1.1) rotate(90deg) !important;
+  animation: none;
+}}
+
 </style>
 """,
         unsafe_allow_html=True,
