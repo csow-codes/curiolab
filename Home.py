@@ -291,11 +291,11 @@ st.caption("Example leaderboard - compete with scientists around the world!")
 
 # Use columns for cleaner display
 lb_data = [
-    ("🥇", "Dr.Curio", 450, "🔥 12 day streak"),
-    ("🥈", "Ariel", 380, "🌱 Plant Expert"),
-    ("🥉", "Mary, 320, "🐝 Bee Whisperer"),
-    ("4️⃣", "You!", prof["xp"], f"💪 {prof['streak_days']} day streak"),
-    ("5️⃣", "Bill", 280, "🌡️ Weather Pro"),
+    ("🥇", "Dr.Curio", 450, "12 day streak"),
+    ("🥈", "Ariel", 380, "Plant Expert"),
+    ("🥉", "Mary, 320, "Bee Whisperer"),
+    ("4️⃣", "You!", prof["xp"], f"{prof['streak_days']} day streak"),
+    ("5️⃣", "Bill", 280, "Weather Pro"),
 ]
 
 # Create a container with clean styling
