@@ -123,10 +123,13 @@ st.markdown("---")
 st.subheader("🤖 Science Buddy")
 st.caption("Ask simple questions and get friendly, accurate explanations.")
 
-q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
-if q:
-    OPENAI = os.getenv("OPENAI_API_KEY")
-    if OPENAI:
+OPENAI = os.getenv("OPENAI_API_KEY")
+
+if not OPENAI:
+    st.info("💡 Add your `OPENAI_API_KEY` to Streamlit secrets to enable the Science Buddy chat!")
+else:
+    q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
+    if q:
         try:
             import openai
             openai.api_key = OPENAI
@@ -140,9 +143,7 @@ if q:
             )
             st.chat_message("assistant").write(resp.choices[0].message.content)
         except Exception as e:
-            st.chat_message("assistant").write(f"(AI unavailable: {e}) Try again later!")
-    else:
-        st.chat_message("assistant").write("Add OPENAI_API_KEY to enable the Science Buddy.")
+            st.chat_message("assistant").write(f"Oops! {e}")
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
