@@ -72,7 +72,7 @@ header_with_mascot(
 st.markdown("<br>", unsafe_allow_html=True)
 c1, c2, c3 = st.columns(3)
 with c1:
-    st.markdown('<div class="stats-counter">🌍 1,247</div><p style="text-align:center;color:#6b7c8a;">Scientists Worldwide</p>', unsafe_allow_html=True)
+    st.markdown('<div class="stats-counter">🌍 1,247</div><p style="text-align:center;color:#6b7c8a;font-size:0.85rem;">Scientists Worldwide<br><span style="font-size:0.75rem;opacity:0.7;">(Demo data)</span></p>', unsafe_allow_html=True)
 with c2:
     st.markdown(f'<div class="stats-counter">🔬 {prof["experiments_completed"]}</div><p style="text-align:center;color:#6b7c8a;">Your Experiments</p>', unsafe_allow_html=True)
 with c3:
@@ -359,7 +359,7 @@ if q:
                 break
         
         if not response:
-            response = "That's a great science question! 🔬 I'm running in demo mode right now (more updates to come!). In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
+            response = "That's a great science question! 🔬 I'm running in demo mode right now. To get AI-powered answers to all your questions, ask your teacher to add an OpenAI API key to the app settings. In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
         
         st.chat_message("assistant").write(response)
 
