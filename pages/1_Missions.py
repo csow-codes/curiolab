@@ -115,7 +115,7 @@ with c1:
             st.session_state.hypotheses['air'] = {"text": hyp, "date": str(dt.date.today())}
             os.makedirs("data", exist_ok=True)
             json.dump(st.session_state.hypotheses, open("data/hypotheses.json", "w"))
-            st.success("Hypothesis saved! 🎯")
+            st.success("Hypothesis saved!)
     else:
         # Show saved hypothesis
         if 'air' in st.session_state.hypotheses:
@@ -126,7 +126,7 @@ with c1:
             </div>
             """, unsafe_allow_html=True)
     
-    st.page_link("pages/2_Air_Quality.py", label="🚀 Start Mission", icon="🌤️")
+    st.page_link("pages/2_Air_Quality.py", label="Start Mission")
     
     # Reflection after observations
     if air_rows >= 3 and 'air' not in st.session_state.reflections:
@@ -168,7 +168,7 @@ with c2:
             st.session_state.hypotheses['seed'] = {"text": hyp, "date": str(dt.date.today())}
             os.makedirs("data", exist_ok=True)
             json.dump(st.session_state.hypotheses, open("data/hypotheses.json", "w"))
-            st.success("Hypothesis saved! 🎯")
+            st.success("Hypothesis saved!)
     else:
         if 'seed' in st.session_state.hypotheses:
             st.markdown(f"""
@@ -178,7 +178,7 @@ with c2:
             </div>
             """, unsafe_allow_html=True)
     
-    st.page_link("pages/3_Seeds_Growth.py", label="🚀 Start Mission", icon="🌱")
+    st.page_link("pages/3_Seeds_Growth.py", label="Start Mission")
     
     if seed_rows >= 3 and 'seed' not in st.session_state.reflections:
         st.markdown("""
@@ -219,7 +219,7 @@ with c3:
             st.session_state.hypotheses['pollinator'] = {"text": hyp, "date": str(dt.date.today())}
             os.makedirs("data", exist_ok=True)
             json.dump(st.session_state.hypotheses, open("data/hypotheses.json", "w"))
-            st.success("Hypothesis saved! 🎯")
+            st.success("Hypothesis saved!)
     else:
         if 'pollinator' in st.session_state.hypotheses:
             st.markdown(f"""
@@ -229,7 +229,7 @@ with c3:
             </div>
             """, unsafe_allow_html=True)
     
-    st.page_link("pages/4_Pollinator_Patrol.py", label="🚀 Start Mission", icon="🐝")
+    st.page_link("pages/4_Pollinator_Patrol.py", label="Start Mission")
     
     if pol_rows >= 3 and 'pollinator' not in st.session_state.reflections:
         st.markdown("""
