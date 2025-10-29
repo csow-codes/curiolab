@@ -44,10 +44,20 @@ with st.sidebar:
         st.caption("Pages will appear after setup.")
 
 # ---------- Hero ----------
+# Debug: Check if mascot exists
+import os
+mascot_exists = os.path.exists("assets/dr_curio.png")
+if not mascot_exists:
+    # Try alternate path
+    mascot_exists = os.path.exists("dr_curio.png")
+    mascot_path = "dr_curio.png" if mascot_exists else "assets/dr_curio.png"
+else:
+    mascot_path = "assets/dr_curio.png"
+
 header_with_mascot(
     title="curiolab",
     subtitle="where curiosity becomes real research ✨",
-    mascot_path="assets/dr_curio.png",
+    mascot_path=mascot_path,
     size_px=140,
 )
 
@@ -123,7 +133,11 @@ st.markdown("---")
 st.subheader("🤖 Science Buddy")
 st.caption("Ask simple questions and get friendly, accurate explanations.")
 
-OPENAI = os.getenv("OPENAI_API_KEY")
+# Try to get API key from Streamlit secrets first, then environment variable
+try:
+    OPENAI = st.secrets.get("OPENAI_API_KEY", None)
+except:
+    OPENAI = os.getenv("OPENAI_API_KEY")
 
 if not OPENAI:
     st.info("💡 Add your `OPENAI_API_KEY` to Streamlit secrets to enable the Science Buddy chat!")
