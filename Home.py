@@ -2,7 +2,7 @@ import streamlit as st, json, os, random, datetime as dt
 from lang import t
 from theme import apply_global_theme, header_with_mascot
 
-st.set_page_config(page_title="CurioLab — Home", page_icon="🧪", layout="wide")
+st.set_page_config(page_title="CurioLab: Home", page_icon="🔬", layout="wide")
 
 # ---------- load profile ----------
 prof = {}
@@ -27,7 +27,7 @@ apply_global_theme()
 
 # ---------- sidebar ----------
 with st.sidebar:
-    st.markdown("### 🏠 Scientist Homebase")
+    st.markdown("### Scientist Homebase")
     if prof.get("avatar") and os.path.exists(prof["avatar"]):
         st.image(prof["avatar"], width=100, caption=prof.get("name","Scientist"))
     else:
@@ -39,16 +39,16 @@ with st.sidebar:
     
     # Achievement badges
     if prof.get("badges"):
-        st.markdown("### 🏆 Badges")
+        st.markdown("### Badges")
         badge_html = "".join([f'<span class="badge">{badge}</span>' for badge in prof["badges"][:3]])
         st.markdown(badge_html, unsafe_allow_html=True)
 
     st.markdown("---")
-    st.markdown("### 🔎 Quick links")
+    st.markdown("### Quick links")
     try:
-        st.page_link("pages/0_Get_Started.py", label="Get Started", icon="👩‍🔬")
-        st.page_link("pages/1_Missions_Hub.py", label="Missions", icon="🧭")
-        st.page_link("pages/5_Analysis_Lab.py", label="Analysis Lab", icon="📊")
+        st.page_link("pages/0_Get_Started.py", label="Get Started")
+        st.page_link("pages/1_Missions_Hub.py", label="Missions")
+        st.page_link("pages/5_Analysis_Lab.py", label="Analysis Lab")
     except Exception:
         st.caption("Pages will appear after setup.")
 
@@ -62,8 +62,8 @@ else:
     mascot_path = "assets/dr_curio.png"
 
 header_with_mascot(
-    title="curiolab",
-    subtitle="where curiosity becomes real research ✨",
+    title="CurioLab",
+    subtitle="A space where your questions grow into discoveries.",
     mascot_path=mascot_path,
     size_px=140,
 )
@@ -74,7 +74,7 @@ c1, c2, c3 = st.columns(3)
 with c1:
     st.markdown('<div class="stats-counter">🌍 1,247</div><p style="text-align:center;color:#6b7c8a;font-size:0.85rem;">Scientists Worldwide<br><span style="font-size:0.75rem;opacity:0.7;">(Demo data)</span></p>', unsafe_allow_html=True)
 with c2:
-    st.markdown(f'<div class="stats-counter">🔬 {prof["experiments_completed"]}</div><p style="text-align:center;color:#6b7c8a;">Your Experiments</p>', unsafe_allow_html=True)
+    st.markdown(f'<div class="stats-counter">🧫 {prof["experiments_completed"]}</div><p style="text-align:center;color:#6b7c8a;">Your Experiments</p>', unsafe_allow_html=True)
 with c3:
     st.markdown(f'<div class="stats-counter">⚡ {prof["xp"]}</div><p style="text-align:center;color:#6b7c8a;">Total XP</p>', unsafe_allow_html=True)
 
@@ -82,13 +82,13 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # ---------- Quick Experiment Button ----------
 st.markdown('<div style="text-align:center;margin:32px 0;">', unsafe_allow_html=True)
-if st.button("🚀 Try a 30-Second Experiment NOW!", key="quick_exp", use_container_width=False):
+if st.button("Run Your First Micro-Experiment: A quick 30-second challenge to get you started!", key="quick_exp", use_container_width=False):
     experiments = [
-        "💨 Blow on your hand with mouth open, then with lips pursed. Which feels cooler? Why?",
-        "🌈 Look at a white surface through your fingers held close to your eye. See the diffraction?",
-        "🔊 Hum and plug/unplug your ears. Notice how the sound changes!",
-        "💧 Drop water on different surfaces. Which spreads most? That's surface tension!",
-        "🌡️ Touch metal and wood. Same temp but metal feels colder. That's thermal conductivity!",
+        "Blow on your hand with mouth open, then with lips pursed. Which feels cooler? Why?",
+        "Look at a white surface through your fingers held close to your eye. See the diffraction?",
+        "Hum and plug/unplug your ears. Notice how the sound changes!",
+        "Drop water on different surfaces. Which spreads most? That's surface tension!",
+        "Touch metal and wood. They have the same temperature but metal feels colder. That's thermal conductivity!",
     ]
     st.info(random.choice(experiments))
 st.markdown('</div>', unsafe_allow_html=True)
@@ -97,10 +97,10 @@ st.markdown('</div>', unsafe_allow_html=True)
 st.markdown("<br>", unsafe_allow_html=True)
 
 daily_options = [
-    ("📐 Measure temperature 3 times today", "💡 Tip: Check morning, noon, and evening. Notice the pattern?"),
-    ("☁️ Observe cloud types for 10 minutes", "💡 Tip: Cumulus = fluffy, Stratus = flat layers, Cirrus = wispy!"),
-    ("🍃 Sketch 3 different leaves you find", "💡 Tip: Look at the edges, veins, and shape. Are they symmetrical?"),
-    ("🐝🦋 Count bees or butterflies for 10 minutes", "💡 Tip: Stay still and quiet. What flowers do they visit most?"),
+    (Measure temperature 3 times today", "Tip: Check morning, noon, and evening. Notice the pattern?"),
+    ("Observe cloud types for 10 minutes", "Tip: Cumulus = fluffy, Stratus = flat layers, Cirrus = wispy!"),
+    ("Sketch 3 different leaves you find", "Tip: Look at the edges, veins, and shape. Are they symmetrical?"),
+    ("Count bees or butterflies for 10 minutes", "Tip: Stay still and quiet. What flowers do they visit most?"),
 ]
 random.seed(dt.date.today().toordinal())
 daily, tip = random.choice(daily_options)
@@ -114,9 +114,9 @@ with col1:
     st.markdown(
         f"""
         <div class="daily-challenge">
-            <h3 style="margin:0 0 12px 0;">🌞 Daily Challenge</h3>
+            <h3 style="margin:0 0 12px 0;"> Daily Challenge</h3>
             <p style="margin:0;font-size:1.05rem;font-weight:500;">{daily}</p>
-            <p style="margin:12px 0 0 0;font-size:0.9rem;color:#8b7a3d;font-style:italic;">{tip if st.session_state.challenge_flipped else '💭 Click the button to reveal a tip!'}</p>
+            <p style="margin:12px 0 0 0;font-size:0.9rem;color:#8b7a3d;font-style:italic;">{tip if st.session_state.challenge_flipped else 'Click the button to reveal a tip!'}</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -146,7 +146,7 @@ st.markdown(streak_html, unsafe_allow_html=True)
 st.markdown("<br><br>", unsafe_allow_html=True)
 
 # ---------- Recent Discoveries Carousel ----------
-st.markdown("### 🔬 Recent Discoveries")
+st.markdown("### Recent Discoveries")
 st.caption("See what other scientists are discovering! (Example data for demo)")
 
 discovery_tabs = st.tabs(["🌍 Today", "📅 This Week", "🏆 Top Rated"])
