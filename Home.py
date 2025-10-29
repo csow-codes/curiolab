@@ -154,11 +154,12 @@ with c1:
         """
         <div class="card">
             <h4 style="margin:0 0 12px 0;">🌤️ Air & Weather</h4>
-            <p style="margin:0 0 16px 0;font-size:0.95rem;">Log temperature, rainfall, and PM2.5. Get an AI mini report.</p>
+            <p style="margin:0 0 24px 0;font-size:0.95rem;">Log temperature, rainfall, and PM2.5. Get an AI mini report.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/2_Air_Quality.py", label=t("Open module →", LANG), icon="🌤️")
 
 with c2:
@@ -166,11 +167,12 @@ with c2:
         """
         <div class="card">
             <h4 style="margin:0 0 12px 0;">🌱 Seeds & Growth</h4>
-            <p style="margin:0 0 16px 0;font-size:0.95rem;">Track plant height and discover growth patterns.</p>
+            <p style="margin:0 0 24px 0;font-size:0.95rem;">Track plant height and discover growth patterns.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/3_Seeds_Growth.py", label=t("Open module →", LANG), icon="🌱")
 
 with c3:
@@ -178,11 +180,12 @@ with c3:
         """
         <div class="card">
             <h4 style="margin:0 0 12px 0;">🐝 Pollinator Patrol</h4>
-            <p style="margin:0 0 16px 0;font-size:0.95rem;">Count bees & butterflies to study biodiversity.</p>
+            <p style="margin:0 0 24px 0;font-size:0.95rem;">Count bees & butterflies to study biodiversity.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/4_Pollinator_Patrol.py", label=t("Open module →", LANG), icon="🐝")
 
 st.markdown("<br><br>", unsafe_allow_html=True)
@@ -257,7 +260,7 @@ if q:
                 break
         
         if not response:
-            response = "That's a great science question! 🔬 I'm running in demo mode right now. To get AI-powered answers to all your questions, ask your teacher to add an OpenAI API key to the app settings. In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
+            response = "That's a great science question! 🔬 I'm running in demo mode right now (more updates to come!). In the meantime, try asking about: plants being green, why the sky is blue, how rain forms, why stars twinkle, or why the moon glows!"
         
         st.chat_message("assistant").write(response)
 
