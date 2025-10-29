@@ -144,6 +144,105 @@ st.markdown(streak_html, unsafe_allow_html=True)
 
 # ---------- Missions (clean cards) ----------
 st.markdown("<br><br>", unsafe_allow_html=True)
+
+# ---------- Recent Discoveries Carousel ----------
+st.markdown("### 🔬 Recent Discoveries")
+st.caption("See what other scientists are discovering!")
+
+discovery_tabs = st.tabs(["🌍 Today", "📅 This Week", "🏆 Top Rated"])
+
+with discovery_tabs[0]:
+    discoveries_today = [
+        "🌡️ **Sarah M.** discovered temperature drops 5°C at sunset in Phoenix!",
+        "🌱 **Alex K.** observed their bean plant grew 3cm in just 2 days!",
+        "🐝 **Jordan T.** counted 47 bees visiting lavender in 10 minutes!",
+    ]
+    for disc in discoveries_today:
+        st.markdown(f"- {disc}")
+
+with discovery_tabs[1]:
+    discoveries_week = [
+        "🌧️ **Emma L.** tracked rainfall patterns and predicted the next storm!",
+        "🦋 **Liam P.** identified 8 different butterfly species in their backyard!",
+        "☁️ **Mia R.** documented all 10 cloud types in a single week!",
+    ]
+    for disc in discoveries_week:
+        st.markdown(f"- {disc}")
+
+with discovery_tabs[2]:
+    discoveries_top = [
+        "⭐ **Chris B.** created a complete weather station from recycled materials!",
+        "⭐ **Taylor N.** grew plants in 5 different conditions to test photosynthesis!",
+        "⭐ **Morgan S.** built a bee hotel and documented 12 different species!",
+    ]
+    for disc in discoveries_top:
+        st.markdown(f"- {disc}")
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ---------- Challenge Friends Feature ----------
+st.markdown("### 🤝 Challenge a Friend")
+col1, col2 = st.columns([2, 1])
+with col1:
+    st.text_input("Enter friend's email", placeholder="scientist@curiolab.org", key="friend_email")
+with col2:
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("📤 Send Challenge", key="send_challenge"):
+        st.success("Challenge sent! 🎯")
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ---------- Leaderboard Preview ----------
+st.markdown("### 🏆 Top Scientists This Week")
+leaderboard_data = [
+    ("🥇", "Emma L.", 450, "🔥 12 day streak"),
+    ("🥈", "Alex K.", 380, "🌱 Plant Expert"),
+    ("🥉", "Jordan T.", 320, "🐝 Bee Whisperer"),
+    ("4️⃣", "You!", prof["xp"], f"💪 {prof['streak_days']} day streak"),
+    ("5️⃣", "Sarah M.", 280, "🌡️ Weather Pro"),
+]
+
+leaderboard_html = '<div style="background:white;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(90,138,158,0.08);">'
+for rank, name, xp, badge in leaderboard_data:
+    highlight = 'background:linear-gradient(135deg,#fff9e6 0%,#fffef5 100%);font-weight:600;' if name == "You!" else ''
+    leaderboard_html += f'''
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px;margin:8px 0;border-radius:12px;{highlight}">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:1.5rem;">{rank}</span>
+            <span style="font-weight:500;">{name}</span>
+            <span style="font-size:0.85rem;color:#6b7c8a;">{badge}</span>
+        </div>
+        <span style="font-weight:600;color:#7eb8d1;">{xp} XP</span>
+    </div>
+    '''
+leaderboard_html += '</div>'
+st.markdown(leaderboard_html, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# ---------- Onboarding Checklist ----------
+st.markdown("### ✅ Getting Started Checklist")
+checklist_items = [
+    ("Complete your first mission", prof.get("experiments_completed", 0) > 0),
+    ("Set up your profile", bool(prof.get("name") != "Scientist")),
+    ("Log data 3 days in a row", prof.get("streak_days", 0) >= 3),
+    ("Ask Science Buddy a question", False),  # Could track this
+    ("Earn your first badge", len(prof.get("badges", [])) > 0),
+]
+
+progress = sum([1 for _, done in checklist_items if done])
+st.progress(progress / len(checklist_items))
+st.caption(f"{progress}/{len(checklist_items)} completed")
+
+checklist_html = '<div style="margin:16px 0;">'
+for task, done in checklist_items:
+    icon = "✅" if done else "⬜"
+    style = "text-decoration:line-through;color:#aaa;" if done else ""
+    checklist_html += f'<div style="padding:8px 0;{style}">{icon} {task}</div>'
+checklist_html += '</div>'
+st.markdown(checklist_html, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
 st.markdown(f"### 🧭 {t('Missions', LANG)}")
 st.markdown("<br>", unsafe_allow_html=True)
 
