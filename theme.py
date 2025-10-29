@@ -158,7 +158,7 @@ def header_with_mascot(title: str, subtitle: str = "", mascot_path: str = "asset
     img_html = ""
     if os.path.exists(mascot_path):
         b64 = base64.b64encode(open(mascot_path, "rb").read()).decode()
-        img_html = f"<img src='data:image/png;base64,{{b64}}' style='width:{size_px}px;height:{size_px}px;'>"
+        img_html = f"<img src='data:image/png;base64,{b64}' style='width:{size_px}px;height:{size_px}px;'>"
     
     st.markdown(
         f"""
