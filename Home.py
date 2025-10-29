@@ -3,6 +3,7 @@ from lang import t
 from theme import apply_global_theme, header_with_mascot
 
 import re
+
 def get_science_buddy_response(question):
     q_lower = question.lower()
     
@@ -274,7 +275,7 @@ with discovery_tabs[2]:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ---------- Challenge Friends Feature ----------
-st.markdown("###Challenge a Friend")
+st.markdown("### Challenge a Friend")
 col1, col2 = st.columns([2, 1])
 with col1:
     st.text_input("Enter friend's email", placeholder="scientist@curiolab.org", key="friend_email")
@@ -441,10 +442,6 @@ q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
 if q:
     response = get_science_buddy_response(q)
     st.chat_message("assistant").write(response)
-
-q = st.chat_input("Ask your Science Buddy (e.g., Why are plants green?)")
-if q:
-    # ... all the OpenAI code ...
 
 st.markdown("<br>", unsafe_allow_html=True)
 st.markdown("---")
