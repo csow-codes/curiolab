@@ -65,7 +65,7 @@ seed_rows = count_rows("data/logs_seeds.csv")
 pol_rows = count_rows("data/logs_pollinators.csv")
 
 # Progress Dashboard
-st.markdown("### 📊 Your Research Portfolio")
+st.markdown("### Your Research Portfolio")
 px1, px2, px3, px4 = st.columns(4)
 with px1: 
     st.metric("🌤️ Air & Weather", f"{air_rows} observations")
@@ -95,6 +95,7 @@ with c1:
       <p style='margin:12px 0 0 0;color:#334155'><strong>Observations:</strong> """ + str(air_rows) + """</p>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/2_Air_Quality.py", label="Start Module →")
 
 with c2:
@@ -107,6 +108,7 @@ with c2:
       <p style='margin:12px 0 0 0;color:#334155'><strong>Observations:</strong> """ + str(seed_rows) + """</p>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/3_Seeds_Growth.py", label="Start Module →")
 
 with c3:
@@ -119,6 +121,7 @@ with c3:
       <p style='margin:12px 0 0 0;color:#334155'><strong>Observations:</strong> """ + str(pol_rows) + """</p>
     </div>
     """, unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
     st.page_link("pages/4_Pollinator_Patrol.py", label="Start Module →")
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -152,7 +155,7 @@ if total >= 5:
             os.makedirs("data", exist_ok=True)
             with open("data/integration_notes.txt", "a") as f:
                 f.write(f"\n[{str(pd.Timestamp.now())}] {integration_note}\n")
-            st.success("Great observation! This is how scientists think! 🌟")
+            st.success("Great observation! This is how scientists think!")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -172,7 +175,7 @@ counts = [air_rows, seed_rows, pol_rows]
 mission_idx = counts.index(min(counts))
 
 st.markdown(f"""
-<div style='background:linear-gradient(135deg,#fef9e7 0%,#fffef5 100%);border-left:4px solid #f59e0b;padding:18px;border-radius:12px;'>
+<div style='background:linear-gradient(135deg,#fef9e7 0%,#fffef5 100%);border-left:4px solid #f59e0b;padding:18px;border-radius:12px;margin-bottom:16px;'>
     <strong style='color:#92400e;font-size:1.1rem;'>{mission_mods[mission_idx]}</strong>
     <p style='margin:8px 0 0 0;color:#78350f;'>{mission_descs[mission_idx]}</p>
 </div>
@@ -192,10 +195,10 @@ st.markdown("""
         CurioLab is growing! These future modules will deepen your understanding of environmental systems:
     </p>
     <ul style='margin:0;color:#6b21a6;line-height:1.8;position:relative;z-index:1;'>
-        <li><strong>🌱 Soil Science</strong> — Analyze pH, moisture, and composition to understand plant health</li>
-        <li><strong>🏙️ Urban Ecology</strong> — Study how cities affect wildlife and local ecosystems</li>
-        <li><strong>☀️ Light & Energy</strong> — Measure sunlight intensity and its effect on photosynthesis</li>
-        <li><strong>💧 Water Quality</strong> — Test local water sources for clarity, temperature, and pH</li>
+        <li><strong> Soil Science</strong> — Analyze pH, moisture, and composition to understand plant health</li>
+        <li><strong> Urban Ecology</strong> — Study how cities affect wildlife and local ecosystems</li>
+        <li><strong> Light + Energy</strong> — Measure sunlight intensity and its effect on photosynthesis</li>
+        <li><strong> Water Quality</strong> — Test local water sources for clarity, temperature, and pH</li>
     </ul>
 </div>
 """, unsafe_allow_html=True)
@@ -225,7 +228,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 # Research Journal Preview
 if os.path.exists("data/integration_notes.txt"):
-    st.markdown("### Your Journal")
+    st.markdown("### Your Thinking Journal")
     st.caption("Your notes on how different environmental systems connect")
     
     with open("data/integration_notes.txt", "r") as f:
