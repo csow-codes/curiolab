@@ -7,9 +7,7 @@ import streamlit as st
 from theme import apply_global_theme, header_with_mascot
 from theme import apply_global_theme, header_with_mascot
 
-st.set_page_config(page_title="Air & Weather", page_icon="🌤️", layout="wide")
-apply_global_theme()
-header_with_mascot("Air & Weather Lab", "Track temperature, rainfall, and PM2.5 with Dr. Curio")
+st.set_page_config(page_title="Air & Weather", page_icon="🔬", layout="wide")
 apply_global_theme()
 
 # Super cute styling
@@ -93,7 +91,7 @@ def create_beautiful_chart(df, metric, color="#0ea5e9", emoji="🌤️"):
     return fig
 
 # Header with mascot in hero
-header_with_mascot("🌤️ Air & Weather Lab", "Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=84)
+header_with_mascot("Air & Weather Lab", "Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=84)
 
 # Quick Tip
 cute_box("💡 Pro Tip: Note clouds, wind, and smells to understand local air quality! Use the kid-friendly choices or advanced numbers for exact measurements!", bg="#e0f2fe", emoji="🌟")
