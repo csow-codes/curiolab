@@ -9,8 +9,6 @@ from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Pollinator Patrol", page_icon="🐝", layout="wide")
 apply_global_theme()
-header_with_mascot("Pollinator Patrol", "Count bees and butterflies with Dr. Curio")
-apply_global_theme()
 
 # Super cute styling
 st.markdown("""
@@ -20,7 +18,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header
-header_with_mascot("🐝 Pollinator Patrol", "Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=84)
+header_with_mascot("Pollinator Patrol", "Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=84)
 
 def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
     st.markdown(f"""
@@ -88,32 +86,6 @@ def create_beautiful_chart(df, species="bees"):
     plt.xticks(rotation=45)
     plt.tight_layout()
     return fig
-
-# Hero Section with CurioLab & Dr. Curio
-logo_path = "avatars/curio_logo.png"
-if os.path.exists(logo_path):
-    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
-    st.markdown(f"""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:80px;height:80px;border-radius:14px;'>
-        <h1>🐝 Pollinator Patrol 🐝</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-      <p>Join <strong>Dr. Curio</strong> in becoming a biodiversity detective and help save our pollinators! 🦋✨</p>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <span class='logo-curio' style='font-size:3rem'>🦫</span>
-        <h1>🐝 Pollinator Patrol 🐝</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-      <p>Join <strong>Dr. Curio</strong> in becoming a biodiversity detective and help save our pollinators! 🦋✨</p>
-    </div>
-    """, unsafe_allow_html=True)
 
 # Quick Tip
 cute_box("💡 Pro Tip: Watch for 10 minutes and count from a safe distance. Note the weather ☀️ and flower blooms 🌸 to understand what attracts pollinators!", bg="#fef3c7", emoji="🌟")
