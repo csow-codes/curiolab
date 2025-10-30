@@ -87,30 +87,6 @@ def create_beautiful_chart(df, plant_name):
     plt.tight_layout()
     return fig
 
-# Hero Section with CurioLab & Dr. Curio
-logo_path = "avatars/curio_logo.png"
-if os.path.exists(logo_path):
-    _b64 = base64.b64encode(open(logo_path, "rb").read()).decode()
-    st.markdown(f"""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <img class='logo-curio' src='data:image/png;base64,{_b64}' style='width:80px;height:80px;border-radius:14px;'>
-        <h1>🌱 Seeds & Growth Lab 🌱</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <div class='hero'>
-      <div style='display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:16px;'>
-        <span class='logo-curio' style='font-size:3rem'>🦫</span>
-        <h1>🌱 Seeds & Growth Lab 🌱</h1>
-        <span class='logo-curio' style='font-size:3rem'>🔬</span>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
-
 # Quick Tip
 cute_box("💡 Pro Tip: Measure at the same time each day for the smoothest curves! Add notes about sunlight ☀️, water 💧, and soil 🌍 to explain the growth patterns.", bg="#fef3c7", emoji="🌟")
 
