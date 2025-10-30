@@ -18,7 +18,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header
-header_with_mascot("Pollinator Patrol", "Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=84)
+header_with_mascot("CurioLab", "Pollinator Patrol: Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=140)
 
 def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
     st.markdown(f"""
