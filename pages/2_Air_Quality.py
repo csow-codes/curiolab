@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 from PIL import Image, ImageDraw, ImageFont
 import streamlit as st
 from theme import apply_global_theme, header_with_mascot
-from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Air & Weather", page_icon="🔬", layout="wide")
 apply_global_theme()
@@ -89,9 +88,9 @@ def create_beautiful_chart(df, metric, color="#0ea5e9", emoji="🌤️"):
     plt.xticks(rotation=45)
     plt.tight_layout()
     return fig
-
-# Header with mascot in hero
-header_with_mascot("Air & Weather Lab", "Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=84)
+    
+# Header
+header_with_mascot("CurioLab", "Air Quality: Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=140)
 
 # Quick Tip
 cute_box("💡 Pro Tip: Note clouds, wind, and smells to understand local air quality! Use the kid-friendly choices or advanced numbers for exact measurements!", bg="#e0f2fe", emoji="🌟")
