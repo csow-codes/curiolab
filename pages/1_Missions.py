@@ -22,12 +22,7 @@ def count_rows(path):
     return pd.read_csv(path).shape[0] if os.path.exists(path) else 0
 
 # Header
-header_with_mascot(
-    "CurioLab Missions", 
-    "From Observation to Understanding", 
-    mascot_path="assets/dr_curio.png", 
-    size_px=76
-)
+header_with_mascot("CurioLab", "Your Missions", mascot_path="assets/dr_curio.png", size_px=140)
 
 # Mission Philosophy
 st.markdown("""
