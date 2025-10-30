@@ -1,7 +1,7 @@
 import streamlit as st, json, os, pandas as pd, random
 from theme import apply_global_theme, header_with_mascot
 
-st.set_page_config(page_title="Modules", page_icon="🗂️", layout="wide")
+st.set_page_config(page_title="Modules", page_icon="🔬", layout="wide")
 apply_global_theme()
 
 # ---------- CurioLab styles ----------
