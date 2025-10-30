@@ -98,6 +98,22 @@ def get_science_buddy_response(question):
 
 st.set_page_config(page_title="CurioLab: Home", page_icon="🔬", layout="wide")
 
+# Global zoom effect - scale everything down to 75%
+st.markdown("""
+<style>
+/* Scale down all content */
+.main .block-container {
+    zoom: 0.75;
+    -moz-transform: scale(0.75);
+    -moz-transform-origin: 0 0;
+}
+/* Adjust max-width to accommodate zoom */
+.main .block-container {
+    max-width: 1400px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ---------- load profile ----------
 prof = {}
 if os.path.exists("profile.json"):
