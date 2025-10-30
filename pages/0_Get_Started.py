@@ -50,7 +50,7 @@ h1, h2, h3, h4, .hero h1, .hero h3 {
   font-weight: 900;
   color: #7c9aa8;
 }
-.hero{background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 60%,#ecfccb 100%);border-radius:28px;padding:42px 54px;margin-bottom:28px;text-align:center;box-shadow:0 8px 24px rgba(59,130,246,.18);border:2px solid #bfdbfe}
+.hero{background:linear-gradient(135deg,#e0f2fe 0%,#f0f9ff 60%,#ffffff 100%);border-radius:28px;padding:42px 54px;margin-bottom:28px;text-align:center;box-shadow:0 8px 24px rgba(59,130,246,.18);border:2px solid #bfdbfe}
 .hero h1{font-size:2.6rem;margin:0 0 8px}
 .hero p{color:#a4a4a4;margin:6px 0 0 0;font-weight:300}
 .logo-curio{animation:bounce 2s ease-in-out infinite}
@@ -106,7 +106,7 @@ with left:
     st.markdown("---")
     st.markdown("#### Starter Badges Preview")
     b1,b2,b3 = st.columns(3)
-    with b1: st.markdown("<div style='background:#ecfccb;padding:12px;border-radius:12px;border:1px solid #a3e635;text-align:center'>Seedling Scientist</div>", unsafe_allow_html=True)
+    with b1: st.markdown("<div style='background:#ffffff;padding:12px;border-radius:12px;border:1px solid #a3e635;text-align:center'>Seedling Scientist</div>", unsafe_allow_html=True)
     with b2: st.markdown("<div style='background:#e0f2fe;padding:12px;border-radius:12px;border:1px solid #93c5fd;text-align:center'>Weather Watcher</div>", unsafe_allow_html=True)
     with b3: st.markdown("<div style='background:#fef3c7;padding:12px;border-radius:12px;border:1px solid #fbbf24;text-align:center'>Pollinator Pal</div>", unsafe_allow_html=True)
 
