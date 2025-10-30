@@ -7,9 +7,7 @@ import streamlit as st
 from theme import apply_global_theme, header_with_mascot
 from theme import apply_global_theme, header_with_mascot
 
-st.set_page_config(page_title="Seeds & Growth", page_icon="🌱", layout="wide")
-apply_global_theme()
-header_with_mascot("Seeds & Growth", "Measure plant height and discover patterns")
+st.set_page_config(page_title="Seeds & Growth", page_icon="🔬", layout="wide")
 apply_global_theme()
 
 # Super cute styling
@@ -100,7 +98,6 @@ if os.path.exists(logo_path):
         <h1>🌱 Seeds & Growth Lab 🌱</h1>
         <span class='logo-curio' style='font-size:3rem'>🔬</span>
       </div>
-      <p>Join <strong>Dr. Curio</strong> in transforming your little plant into a scientific adventure! 🌿✨</p>
     </div>
     """, unsafe_allow_html=True)
 else:
