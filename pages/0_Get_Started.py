@@ -3,7 +3,9 @@ from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Get Started", page_icon="🔬", layout="wide")
 apply_global_theme()
-header_with_mascot("Welcome to CurioLab", "Meet Dr. Curio and set up your profile.")
+
+# Header
+header_with_mascot("Pollinator Patrol", "Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=84)
 
 def cute_box(text: str, bg="#e0f2fe"):
     st.markdown(
