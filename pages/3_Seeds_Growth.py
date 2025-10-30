@@ -108,7 +108,6 @@ else:
         <h1>🌱 Seeds & Growth Lab 🌱</h1>
         <span class='logo-curio' style='font-size:3rem'>🔬</span>
       </div>
-      <p>Join <strong>Dr. Curio</strong> in transforming your little plant into a scientific adventure! 🌿✨</p>
     </div>
     """, unsafe_allow_html=True)
 
