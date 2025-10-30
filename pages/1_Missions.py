@@ -1,7 +1,7 @@
 import streamlit as st, os, json, pandas as pd, datetime as dt
 from theme import apply_global_theme, header_with_mascot
 
-st.set_page_config(page_title="Missions", page_icon="🧭", layout="wide")
+st.set_page_config(page_title="Missions", page_icon="🔬", layout="wide")
 apply_global_theme()
 
 # Custom CSS
