@@ -28,13 +28,8 @@ h1, h2, h3, h4, .hero h1, .hero h3, .card h3 {
 </style>
 """, unsafe_allow_html=True)
 
-# ---------- Header ----------
-header_with_mascot(
-    "Modules Hub", 
-    "Explore, Compare, Connect", 
-    mascot_path="assets/dr_curio.png", 
-    size_px=76
-)
+# Header
+header_with_mascot("CurioLab", "Modules Hub: Explore, Compare, and Connect!", mascot_path="assets/dr_curio.png", size_px=140)
 
 # ---------- Science Themes Overview ----------
 st.markdown("""
