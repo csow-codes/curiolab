@@ -22,7 +22,8 @@ st.markdown("""
 apply_global_theme()
 
 # Header
-header_with_mascot("Analysis Lab", "Discover patterns and insights from your data", mascot_path="assets/dr_curio.png", size_px=100)
+header_with_mascot("CurioLab", "Analysis Lab: Discover patterns and insights from your data!", mascot_path="assets/dr_curio.png", size_px=140)
+
 
 # Styling
 st.markdown("""
