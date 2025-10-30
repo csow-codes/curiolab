@@ -5,11 +5,7 @@ st.set_page_config(page_title="Get Started", page_icon="🔬", layout="wide")
 apply_global_theme()
 
 # Header
-header_with_mascot(
-    title="CurioLab",
-    subtitle="Pollinator Patrol: Count pollinators with Dr. Curio!",
-    mascot_path=mascot_path,
-    size_px=140,
+header_with_mascot("CurioLab", "Pollinator Patrol: Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=140)
 
 def cute_box(text: str, bg="#e0f2fe"):
     st.markdown(
