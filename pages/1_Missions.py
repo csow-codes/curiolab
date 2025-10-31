@@ -58,7 +58,7 @@ with px3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Hypothesis tracking
+#hypothesis
 if 'hypotheses' not in st.session_state:
     st.session_state.hypotheses = {}
 if 'reflections' not in st.session_state:
