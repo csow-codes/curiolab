@@ -10,7 +10,7 @@ from theme import apply_global_theme, header_with_mascot
 st.set_page_config(page_title="Seeds & Growth", page_icon="🔬", layout="wide")
 apply_global_theme()
 
-# Super cute styling
+#styling
 st.markdown("""
 <style>
 .hero { padding: 40px 50px; }
@@ -18,7 +18,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Header
+#header
 header_with_mascot("CurioLab", "Seeds and Growth: Track plant growth with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=140)
 
 def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
@@ -87,10 +87,10 @@ def create_beautiful_chart(df, plant_name):
     plt.tight_layout()
     return fig
 
-# Quick Tip
+#tip
 cute_box("💡 Pro Tip: Measure at the same time each day for the smoothest curves! Add notes about sunlight ☀️, water 💧, and soil 🌍 to explain the growth patterns.", bg="#fef3c7", emoji="🌟")
 
-# Educational fun facts
+#fun facts
 st.markdown("### 🧪 Quick Science Facts")
 c1, c2, c3 = st.columns(3)
 with c1:
@@ -102,7 +102,7 @@ with c3:
 
 st.markdown("---")
 
-# Main input section
+#input section
 st.markdown("### 📝 Your Plant Journal")
 left, right = st.columns([1.2, 2], gap="large")
 
@@ -140,17 +140,17 @@ with right:
             avg_growth = (df['height_cm'].iloc[-1] - df['height_cm'].iloc[0]) / len(df) if len(df) > 1 else 0
             st.metric("🌿 Avg Daily Growth", f"{avg_growth:.2f} cm/day")
         
-        # Beautiful chart
+        #chart
         st.markdown("#### 📈 Growth Visualization")
         plant_name = df["plant"].iloc[0] if not df.empty else "Plant"
         fig = create_beautiful_chart(df, plant_name)
         st.pyplot(fig)
         
-        # Data table
+        #table
         st.markdown("#### 📋 All Your Observations")
         st.dataframe(df, use_container_width=True, hide_index=True)
         
-        # Mini Science Report
+        #Science Report
         st.markdown("---")
         st.markdown("### 🔬 Your Mini Science Report")
         OPENAI = os.getenv("OPENAI_API_KEY")
@@ -225,7 +225,7 @@ with right:
                               data=open(out, "rb").read(), 
                               file_name="Seeds_Story_Card.png")
 
-# Educational section
+#edu section
 st.markdown("---")
 st.markdown("### 🌿 Fun Learning Zone")
 
