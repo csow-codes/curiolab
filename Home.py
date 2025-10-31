@@ -7,7 +7,6 @@ import re
 def get_science_buddy_response(question):
     q_lower = question.lower()
     
-    # Comprehensive science knowledge base
     responses = {
         # Biology
         "green|chlorophyll|leaf|leaves": "Great question! Plants are green because of chlorophyll, a special pigment in their leaves. Chlorophyll absorbs red and blue light from the sun for photosynthesis, but reflects green light back to our eyes. That's why we see them as green!",
