@@ -3,7 +3,6 @@ from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Analysis Lab", page_icon="📊", layout="wide")
 
-# Global zoom effect - scale everything down to 75%
 st.markdown("""
 <style>
 /* Scale down all content */
@@ -21,11 +20,11 @@ st.markdown("""
 
 apply_global_theme()
 
-# Header
+#headerr
 header_with_mascot("CurioLab", "Analysis Lab: Discover patterns and insights from your data!", mascot_path="assets/dr_curio.png", size_px=140)
 
 
-# Styling
+#style
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
@@ -63,10 +62,10 @@ def info_card(title, content, color="#e0f2fe"):
     </div>
     """, unsafe_allow_html=True)
 
-# Quick Tip
+#tip
 cute_box("You're about to find connections in your data. Look for correlations and patterns - you're doing real science.", bg="#e0f2fe")
 
-# Educational cards
+#edu card
 st.markdown("### Data Science Basics")
 c1, c2, c3 = st.columns(3)
 with c1:
