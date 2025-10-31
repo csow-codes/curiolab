@@ -89,13 +89,13 @@ def create_beautiful_chart(df, metric, color="#0ea5e9", emoji="🌤️"):
     plt.tight_layout()
     return fig
     
-# Header
+#header
 header_with_mascot("CurioLab", "Air Quality: Join Dr. Curio to track air and weather!", mascot_path="assets/dr_curio.png", size_px=140)
 
-# Quick Tip
+#quick tip
 cute_box("💡 Pro Tip: Note clouds, wind, and smells to understand local air quality! Use the kid-friendly choices or advanced numbers for exact measurements!", bg="#e0f2fe", emoji="🌟")
 
-# Educational fun facts
+#edu fun facts
 st.markdown("### 🧪 Weather & Air Quality Facts")
 c1, c2, c3 = st.columns(3)
 with c1:
@@ -107,7 +107,7 @@ with c3:
 
 st.markdown("---")
 
-# Main input section
+#main input
 st.markdown("### 📝 Your Weather Journal")
 left, right = st.columns([1.2, 2], gap="large")
 
@@ -266,7 +266,7 @@ with right:
                               data=open(out, "rb").read(), 
                               file_name="Air_Story_Card.png")
 
-# Educational section
+#edu section
 st.markdown("---")
 st.markdown("### 🌿 Fun Learning Zone")
 
