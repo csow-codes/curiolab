@@ -10,14 +10,14 @@ from theme import apply_global_theme, header_with_mascot
 st.set_page_config(page_title="Pollinator Patrol", page_icon="🐝", layout="wide")
 apply_global_theme()
 
-# Super cute styling
+#styling
 st.markdown("""
 <style>
 .hero { padding: 40px 50px; }
 </style>
 """, unsafe_allow_html=True)
 
-# Header
+#header
 header_with_mascot("CurioLab", "Pollinator Patrol: Count pollinators with Dr. Curio!", mascot_path="assets/dr_curio.png", size_px=140)
 
 def cute_box(text: str, bg="#f8f4ff", emoji="✨"):
@@ -87,10 +87,10 @@ def create_beautiful_chart(df, species="bees"):
     plt.tight_layout()
     return fig
 
-# Quick Tip
+#Tip
 cute_box("💡 Pro Tip: Watch for 10 minutes and count from a safe distance. Note the weather ☀️ and flower blooms 🌸 to understand what attracts pollinators!", bg="#fef3c7", emoji="🌟")
 
-# Educational fun facts
+#fun facts
 st.markdown("### 🧪 Pollinator Power Facts")
 c1, c2, c3 = st.columns(3)
 with c1:
@@ -102,7 +102,7 @@ with c3:
 
 st.markdown("---")
 
-# Main input section
+#input section
 st.markdown("### 📝 Your Pollinator Journal")
 left, right = st.columns([1.2, 2], gap="large")
 
@@ -259,7 +259,7 @@ with right:
                               data=open(out, "rb").read(), 
                               file_name="Pollinator_Story_Card.png")
 
-# Educational section
+#edu section
 st.markdown("---")
 st.markdown("### 🌿 Fun Learning Zone")
 
