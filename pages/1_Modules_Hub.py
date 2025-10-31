@@ -4,7 +4,7 @@ from theme import apply_global_theme, header_with_mascot
 st.set_page_config(page_title="Modules", page_icon="🔬", layout="wide")
 apply_global_theme()
 
-# ---------- CurioLab styles ----------
+#styles
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
@@ -31,7 +31,7 @@ h1, h2, h3, h4, .hero h1, .hero h3, .card h3 {
 # Header
 header_with_mascot("CurioLab", "Modules Hub: Explore, Compare, and Connect!", mascot_path="assets/dr_curio.png", size_px=140)
 
-# ---------- Science Themes Overview ----------
+#science themes
 st.markdown("""
 <div class='theme-box'>
     <h3 style='margin:0 0 12px 0;color:#0369a1;'>🔬 The Science of Interconnected Systems</h3>
@@ -43,7 +43,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# ---------- load existing profile ----------
+#profile
 prof = {}
 if os.path.exists("profile.json"):
     try:
@@ -51,7 +51,7 @@ if os.path.exists("profile.json"):
     except Exception:
         prof = {}
 
-# ---------- Module Cards ----------
+#module
 def count_rows(path):
     return pd.read_csv(path).shape[0] if os.path.exists(path) else 0
 
@@ -121,7 +121,7 @@ with c3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# Integrative Thinking Prompt
+#Thinking Prompt
 if total >= 5:
     st.markdown("""
     <div class='integration-box'>
@@ -138,7 +138,7 @@ if total >= 5:
     </div>
     """, unsafe_allow_html=True)
     
-    # Integration reflection
+    #Reflection
     integration_note = st.text_area(
         "Write your observation about how the modules connect:",
         placeholder="Example: I noticed that on warmer days, I see more pollinators, and my plants also grew faster...",
