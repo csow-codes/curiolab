@@ -3,7 +3,6 @@ from theme import apply_global_theme, header_with_mascot
 
 st.set_page_config(page_title="Get Started", page_icon="🔬", layout="wide")
 
-# Global zoom effect - scale everything down to 75%
 st.markdown("""
 <style>
 /* Scale down all content */
@@ -36,7 +35,7 @@ def cute_box(text: str, bg="#e0f2fe"):
         unsafe_allow_html=True
     )
 
-# --- CurioLab hero styling ---
+#styling
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;400;700;800;900&family=Poppins:wght@200;300;400;600&display=swap');
@@ -77,7 +76,7 @@ left, right = st.columns([1,1.2], gap="large")
 with left:
     name = st.text_input("Your name or nickname", value=prof.get("name", "Alex"), help="Shown on your CurioLab cards")
 
-    # --- Safe age selectbox ---
+    #age
     AGE_CHOICES = ["8–10", "11–13", "14–16"]
     saved_age = prof.get("age")
     if saved_age not in AGE_CHOICES:
@@ -86,14 +85,14 @@ with left:
         age_index = AGE_CHOICES.index(saved_age)
     age = st.selectbox("Age range", AGE_CHOICES, index=age_index)
 
-    # --- Topics ---
+    #topics
     topics = st.multiselect(
         "Favorite topics",
         ["Environment", "Plants", "Weather", "Health", "Physics", "Space"],
         default=prof.get("topics", ["Environment"])
     )
 
-    # --- Safe language selectbox ---
+    #lingo
     LANG_CHOICES = ["English", "Español", "简体中文"]
     saved_lang = prof.get("language", "English")
     lang_index = LANG_CHOICES.index(saved_lang) if saved_lang in LANG_CHOICES else 0
@@ -110,7 +109,7 @@ with left:
     with b2: st.markdown("<div style='background:#e0f2fe;padding:12px;border-radius:12px;border:1px solid #93c5fd;text-align:center'>Weather Watcher</div>", unsafe_allow_html=True)
     with b3: st.markdown("<div style='background:#fef3c7;padding:12px;border-radius:12px;border:1px solid #fbbf24;text-align:center'>Pollinator Pal</div>", unsafe_allow_html=True)
 
-    # Save profile button
+    #safe profile
     if st.button("Save My Profile", type="primary", use_container_width=True):
         avatar_emoji = generate_scientist_emoji(name)
         prof_new = {
